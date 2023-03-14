@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <link rel="stylesheet" href="./global.css" />
+    <link rel="stylesheet" href="./reload1.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=IBM Plex Mono:wght@500&display=swap"
+    />
+  </head>
+  <body>
+    <div class="reload1">
+      <img class="window-icon" alt="" src="./public/window.svg" />
+      <div class="unibank1">UniBank</div>
+      <img
+        class="changecurrency-icon"
+        alt=""
+        src="./public/changecurrency.svg"
+      /><img
+        class="payment-icon"
+        alt=""
+        src="./public/payment.svg"
+        id="payment"
+      /><textarea
+        class="currency"
+        placeholder="currency"
+        rows="{1}"
+        cols="{1}"
+      ></textarea>
+      <div class="amount"></div>
+      <img class="icon-2" alt="" src="./public/icon.gif" /><img
+        class="icon-1"
+        alt=""
+        src="./public/icon.gif"
+      />
+      <div class="history-place">
+        <div class="scrolling-table">
+          <textarea class="table" cols="{3}"></textarea>
+        </div>
+        <div class="history-window"></div>
+      </div>
+      <img class="icon-21" alt="" src="./public/icon.gif" />
+    </div>
+
+    <script>
+      setTimeout(function() {
+          window.location.href = './main-page.html';
+      }, 2000);
+    </script>
+  </body>
+</html>

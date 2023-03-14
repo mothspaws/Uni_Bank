@@ -1,0 +1,104 @@
+.unibank5,
+.window-icon1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 600px;
+  height: 650px;
+}
+.unibank5 {
+  top: 6px;
+  left: 267px;
+  font-weight: 500;
+  display: inline-block;
+  width: 66px;
+  height: 16px;
+}
+.changecurrency-icon1,
+.payment-icon1 {
+  position: absolute;
+  top: 142px;
+  left: 504px;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+}
+.payment-icon1 {
+  top: 78px;
+  left: 472px;
+  width: 100px;
+  height: 37px;
+}
+.currency1 {
+  border: 2px solid var(--color-slateblue);
+  height: 40px;
+  width: 105px;
+  position: absolute;
+  top: 151px;
+  left: 19px;
+  border-radius: var(--br-6xl);
+  box-sizing: border-box;
+}
+.amount1,
+.currency1,
+.table1 {
+  background-color: var(--color-white);
+}
+.amount1 {
+  border: 2px solid var(--color-slateblue);
+  height: 50px;
+  width: 250px;
+  position: absolute;
+  top: 80px;
+  left: 19px;
+  border-radius: var(--br-6xl);
+  box-sizing: border-box;
+}
+.table1 {
+  border: 0;
+  width: 540px;
+  top: 0;
+  left: 0;
+  height: 1200px;
+}
+.history-window1,
+.scrolling-table1,
+.table1 {
+  position: absolute;
+  border-radius: var(--br-6xl);
+}
+.scrolling-table1 {
+  top: -49px;
+  left: 11px;
+  width: 540px;
+  height: 398px;
+  overflow-y: auto;
+}
+.history-window1 {
+  border: 2px solid var(--color-slateblue);
+  background-color: var(--color-gray);
+  top: -62px;
+  left: 0;
+  box-sizing: border-box;
+  width: 560px;
+  height: 422px;
+}
+.history-place1 {
+  position: absolute;
+  top: 269px;
+  left: 19px;
+  width: 560px;
+  height: 360px;
+}
+.mainpage {
+  position: relative;
+  border-radius: var(--br-6xl);
+  background-color: var(--color-white);
+  width: 100%;
+  height: 650px;
+  overflow: hidden;
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--color-black);
+  font-family: var(--font-ibm-plex-mono);
+}

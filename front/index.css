@@ -1,0 +1,56 @@
+.login1-child {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 274px;
+}
+.log-in,
+.unibank4 {
+  position: absolute;
+  top: 5px;
+  left: 117px;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  font-family: var(--font-ibm-plex-mono);
+  color: var(--color-black);
+  text-align: center;
+  display: inline-block;
+  width: 66px;
+  height: 16px;
+}
+.log-in {
+  top: 39px;
+  font-size: var(--font-size-xs);
+}
+.password,
+.user-id {
+  border: 2px solid var(--color-slateblue);
+  background-color: var(--color-white);
+  position: absolute;
+  top: 145px;
+  left: 60px;
+  border-radius: var(--br-3xs);
+  box-sizing: border-box;
+  width: 180px;
+  height: 30px;
+}
+.user-id {
+  top: 87px;
+}
+.go-log-icon {
+  position: absolute;
+  top: 201px;
+  left: 117px;
+  width: 66px;
+  height: 36px;
+  cursor: pointer;
+}
+.login1 {
+  position: relative;
+  border-radius: var(--br-6xl);
+  background-color: var(--color-white);
+  width: 100%;
+  height: 274px;
+  overflow: hidden;
+}
