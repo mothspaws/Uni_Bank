@@ -1,0 +1,120 @@
+.unibank1,
+.window-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 600px;
+  height: 650px;
+}
+.unibank1 {
+  top: 6px;
+  left: 267px;
+  font-weight: 500;
+  display: inline-block;
+  width: 66px;
+  height: 16px;
+}
+.changecurrency-icon,
+.payment-icon {
+  position: absolute;
+  top: 142px;
+  left: 504px;
+  width: 36px;
+  height: 36px;
+}
+.payment-icon {
+  top: 78px;
+  left: 472px;
+  width: 100px;
+  height: 37px;
+  cursor: pointer;
+}
+.amount,
+.currency {
+  border: 2px solid var(--color-slateblue);
+  background-color: var(--color-white);
+  height: 40px;
+  width: 105px;
+  position: absolute;
+  top: 151px;
+  left: 19px;
+  border-radius: var(--br-6xl);
+  box-sizing: border-box;
+}
+.amount {
+  top: 80px;
+  width: 250px;
+  height: 50px;
+}
+.icon-1,
+.icon-2 {
+  position: absolute;
+  top: 130px;
+  left: 31px;
+  width: 82px;
+  height: 82px;
+  object-fit: cover;
+}
+.icon-1 {
+  top: 32px;
+  left: 0;
+  width: 144px;
+  height: 146px;
+}
+.table {
+  border: 0;
+  background-color: var(--color-white);
+  width: 540px;
+  top: 0;
+  left: 0;
+  height: 1200px;
+}
+.history-window,
+.scrolling-table,
+.table {
+  position: absolute;
+  border-radius: var(--br-6xl);
+}
+.scrolling-table {
+  top: -49px;
+  left: 11px;
+  width: 540px;
+  height: 398px;
+  overflow-y: auto;
+}
+.history-window {
+  top: -62px;
+  left: 0;
+  background-color: var(--color-gray);
+  border: 2px solid var(--color-slateblue);
+  box-sizing: border-box;
+  width: 560px;
+  height: 422px;
+}
+.history-place,
+.icon-21 {
+  position: absolute;
+  top: 269px;
+  left: 19px;
+  width: 560px;
+  height: 360px;
+}
+.icon-21 {
+  top: 289px;
+  left: 166px;
+  width: 268px;
+  height: 260px;
+  object-fit: cover;
+}
+.reload1 {
+  position: relative;
+  border-radius: var(--br-6xl);
+  background-color: var(--color-white);
+  width: 100%;
+  height: 650px;
+  overflow: hidden;
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--color-black);
+  font-family: var(--font-ibm-plex-mono);
+}

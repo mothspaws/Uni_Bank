@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <link rel="stylesheet" href="./global.css" />
+    <link rel="stylesheet" href="./main-page.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=IBM Plex Mono:wght@500&display=swap"
+    />
+  </head>
+  <body>
+    <div class="mainpage">
+      <img class="window-icon1" alt="" src="./public/window.svg" />
+      <div class="unibank5">UniBank</div>
+      <img
+        class="changecurrency-icon1"
+        alt=""
+        src="./public/changecurrency.svg"
+        id="changeCurrencyIcon"
+      /><img
+        class="payment-icon1"
+        alt=""
+        src="./public/payment1.svg"
+        id="payment"
+      /><textarea
+        class="currency1"
+        placeholder="currency"
+        rows="{1}"
+        cols="{1}"
+      ></textarea
+      ><textarea
+        class="amount1"
+        placeholder="000000"
+        rows="{1}"
+        cols="{1}"
+      ></textarea>
+      <div class="history-place1">
+        <div class="scrolling-table1">
+          <textarea class="table1" cols="{3}"></textarea>
+        </div>
+        <textarea class="history-window1"></textarea>
+      </div>
+    </div>
+
+    <script>
+      var changeCurrencyIcon = document.getElementById("changeCurrencyIcon");
+      if (changeCurrencyIcon) {
+        changeCurrencyIcon.addEventListener("click", function (e) {
+          window.location.href = "./reload1.html";
+        });
+      }
+      
+      var payment = document.getElementById("payment");
+      if (payment) {
+        payment.addEventListener("click", function (e) {
+          window.location.href = "./payment-process.html";
+        });
+      }
+      </script>
+  </body>
+</html>
