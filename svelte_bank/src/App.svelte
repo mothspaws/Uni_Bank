@@ -1,26 +1,16 @@
-<!-- App.svelte -->
 <script>
-	import LoginForm from "./LoginForm.svelte";
-	import Authentication from "./Authentication.svelte";
-  
-	let isLoggedIn = false;
-  
-	function handleLogin() {
-	  isLoggedIn = true;
-	}
-  </script>
-  
-  
-  <main>
-	<h1>UniBank</h1>
-	{#if !isLoggedIn}
-	  <LoginForm on:login="{handleLogin}" />
-	{:else}
-	  <Authentication />
-	{/if}
-  </main>
-  
+	import { Router, Route } from "svelte-routing";
+	import LoginPage from "./LoginForm.svelte";
+	import AuthenticationPage from "./Authentication.svelte";
+	import MainPage from "./MainPage.svelte";
+</script>
+
+<Router>
+	<Route path="/" component={LoginPage} />
+	<Route path="/authenticate" component={AuthenticationPage} />
+	<Route path="/main" component={MainPage} />
+</Router>
 
 <style>
-	/* ADD global variables */
+	/* global styles here */
 </style>

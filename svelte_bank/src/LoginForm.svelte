@@ -1,11 +1,10 @@
 <script>
     import axios from "axios";
-    import { createEventDispatcher } from "svelte";
+    import { navigate } from "svelte-routing";
 
     let username = "";
     let password = "";
 
-    const dispatch = createEventDispatcher();
     async function handleSubmit() {
         /*
         Send a POST request to the server with the username and password
@@ -18,7 +17,7 @@
 
             if (response.data.success) {
                 console.log("Logged in");
-                dispatch("login");
+                navigate("/authenticate");
             } else {
                 console.log("Invalid credentials");
             }
