@@ -1,3 +1,7 @@
+### custom files ###
+my_server/accounts_info/*
+my_server/users.txt
+
 ### macOS ###
 # General
 .DS_Store
