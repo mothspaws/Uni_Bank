@@ -1,5 +1,6 @@
 <script>
     import axios from "axios";
+    import { navigate } from "svelte-routing";
 
     let code = "";
 
@@ -15,6 +16,7 @@
 
             if (response.data.success) {
                 console.log("Authenticated");
+                navigate("/main");
             } else {
                 console.log("Not Authenticated");
             }
