@@ -3,7 +3,7 @@ const cors = require('cors');
 const fs = require('fs');
 // email sendler
 const nodemailer = require("nodemailer");
-const code_generated = generateSixDigitCode();
+code_generated = generateSixDigitCode();
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -90,6 +90,7 @@ app.post('/api/authenticate', (req, res) => {
     const code = req.body.code;
 
     if (isValidCode(code)) {
+        code_generated = generateSixDigitCode();
         res.json({ success: true });
     } else {
         res.json({ success: false });
