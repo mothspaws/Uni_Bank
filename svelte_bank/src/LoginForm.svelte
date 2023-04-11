@@ -16,8 +16,8 @@
             );
 
             if (response.data.success) {
-                console.log("Logged in");
-                navigate("/authenticate");
+                localStorage.setItem("username", username); // Save the username in the localStorage
+                navigate("/authentication");
             } else {
                 console.log("Invalid credentials");
             }
