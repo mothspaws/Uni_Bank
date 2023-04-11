@@ -1,16 +1,12 @@
 <script>
-	import { Router, Route } from "svelte-routing";
-	import LoginPage from "./LoginForm.svelte";
-	import AuthenticationPage from "./Authentication.svelte";
-	import MainPage from "./MainPage.svelte";
+    import { Router, Route } from "svelte-routing";
+    import routes from "./routes.js";
 </script>
 
 <Router>
-	<Route path="/" component={LoginPage} />
-	<Route path="/authenticate" component={AuthenticationPage} />
-	<Route path="/main" component={MainPage} />
+    {#each routes as { name, component }}
+        <Route path="{name}" let:params>
+            <svelte:component this="{component}" {params} />
+        </Route>
+    {/each}
 </Router>
-
-<style>
-	/* global styles here */
-</style>

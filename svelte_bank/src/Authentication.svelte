@@ -5,13 +5,15 @@
     let code = "";
 
     async function handleSubmit() {
-        /*
-        Send a POST request to the server with the code written by user
-        */
+        const username = localStorage.getItem("username");
+
         try {
             const response = await axios.post(
                 "http://localhost:3001/api/authenticate",
-                { code }
+                {
+                    username,
+                    code,
+                }
             );
 
             if (response.data.success) {
