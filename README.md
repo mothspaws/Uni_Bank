@@ -9,6 +9,7 @@
         Cílem semestrální práce STIN je vytvoření aplikace, která simuluje komunikaci uživatele s bankou a umožňuje provádět platby a zobrazovat historii účtu. Aplikace bude se skládat z backendu a frontendu, které budou vzájemně komunikovat a nacházet se na různých zařízeních. Součásti testování budou vytvořené testovací uživatelé. Oni se budou přihlašovat do aplikace, provádět transakce a ověřovat správnost funkčností systému.
 
     1.2. Rozsah produktu
+    <p>&nbsp;</p>
         1.2.1. Funkční požadavky
             <ul>
                 <li>Uživatel se může přihlásit do aplikace,</li>
@@ -17,7 +18,7 @@
                 <li>Uživatel může zobrazovat historii účtu,</li>
                 <li>Uživatel může zobrazit jakoukoliv ze svých měn.</li>
             </ul>
-        1.2.3. Použití
+        1.2.2. Použití
             Aplikace bude použitá jako výsledek semestrální práce a jako potvrzení dosazených znalosti z předmětu STIN.
 
     1.3. Definice, zkratky, zkratková slova
@@ -35,7 +36,7 @@
         JavaScript - programovácí jazyk,
         Currency - kód měny dle ISO 4217 (EUR, USD, CZK atd.)
 
-    1.5. Odkazy
+    1.4. Odkazy
         <ul>
             <li>[Repozitář](https://github.com/ViktoriiaSr/Uni_Bank) projektu</li>
             <li>[Zdroj](https://www.cnb.cz/cs/financni-trhy/devizovy-trh/kurzy-devizoveho-trhu/kurzy-devizoveho-trhu/denni_kurz.txt?date=20.04.2022) měnového kurzu eura</li>
@@ -45,11 +46,13 @@
     **Název produktu:** Uni Bank 
     **Jazyk aplikace:** angličtina 
     **Předpokládané datum dokončení:** 4.5.2023
+
     2.1. Perspektiva produktu
         Aplikace bude vytvořena jako webová aplikace, která bude komunikovat s backendem a databází. Backend bude vytvořen pomocí Node.js a bude komunikovat s databází pomocí knihovny SQLite. Databáze bude vytvořena pomocí jazyka SQL a bude komunikovat s backendem pomocí knihovny SQLite. Frontend bude vytvořen pomocí jazyka JavaScript a moderního frameworku Svelte a bude komunikovat s backendem pomocí Fetch API. Backend bude komunikovat s frontendem pomocí REST API.
     2.2. Funkce produktu
         <ul>
             <li>Přihlášení
+            <p>&nbsp;</p>
                 Uživatel musí zadat přihlašovací údaje.
                     Pokud v systému bude nalezen uživatel s odpovídajícími údají: 
                         - bude přesměrován na stránku s ověřením,
@@ -58,6 +61,7 @@
                         - uživatelovi se zobrazí chybová hláška `user was not found`.
             </li>
             <li>Ověření
+            <p>&nbsp;</p>
                 Uživatel musí zadat ověřovací kód.
                     Pokud bude ověřovací kód správný:
                         - bude přesměrován na stránku s účty.
@@ -65,8 +69,10 @@
                         - uživatelovi se zobrazí chybová hláška `wrong code`.
             </li>
             <li>Platba
+                <p>&nbsp;</p>
                 **Popis chování:**
                 Po potvrzení platby uživatelem proběhně několik kontrol:
+                <p>&nbsp;</p>
                 <ul>
                     <li>Má-li uživatel účet v měně platby?
                     </li>
@@ -77,6 +83,7 @@
                     </li>
                 </ul>
                 **Výchozá měna:** pro všechny uživatele je nastavena na `CZK`.
+                <p>&nbsp;</p>
                 <ul>
                     <li>Na hlavní stránce s účty je umíštěno tlačítko `payment`,</li>
                     <li>Po kliknutí na tlačítko `payment` se náhodně vygeneruje částka a měna,</li>
@@ -96,9 +103,11 @@
                 </ul>
             </li>
             <li>Historie měňového kurzu
+            <p>&nbsp;</p>
                 Na hlavní strínce bude zobrazována historie tranzakcí s aktuáně zvolenou měnou.
             </li>
             <li>Zobrazení
+            <p>&nbsp;</p>
                 <ul>
                     <li>Na hlavní stránce s účty je umístěno tlačítko `change currency`,</li>
                     <li>Po kliknutí na tlačítko `change currency` se změní aktuální měna na následující uživatelskou měnu,</li>
