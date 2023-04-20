@@ -6,6 +6,7 @@
 1. Úvod
 
     1.1. Účel
+    <p>&nbsp;</p>
         Cílem semestrální práce STIN je vytvoření aplikace, která simuluje komunikaci uživatele s bankou a umožňuje provádět platby a zobrazovat historii účtu. Aplikace bude se skládat z backendu a frontendu, které budou vzájemně komunikovat a nacházet se na různých zařízeních. Součásti testování budou vytvořené testovací uživatelé. Oni se budou přihlašovat do aplikace, provádět transakce a ověřovat správnost funkčností systému.
 
     1.2. Rozsah produktu
@@ -22,19 +23,21 @@
             Aplikace bude použitá jako výsledek semestrální práce a jako potvrzení dosazených znalosti z předmětu STIN.
 
     1.3. Definice, zkratky, zkratková slova
-        STIN - Softwarové inženýrství,
-        DSP - Dokumentace softwarového produktu,
-        API - Application Programming Interface,
-        REST - REpresentational State Transfer,
-        SQL - Structured Query Language,
-        SQLite - SQL database engine,
-        Node.js - JavaScript runtime environment,
-        Svelte - JavaScript framework,
-        Fetch API - JavaScript API,
-        HTML - HyperText Markup Language,
-        CSS - Cascading Style Sheets,
-        JavaScript - programovácí jazyk,
-        Currency - kód měny dle ISO 4217 (EUR, USD, CZK atd.)
+    <ul>
+        <li>STIN - Softwarové inženýrství,</li>
+        <li>DSP - Dokumentace softwarového produktu,</li>
+        <li>API - Application Programming Interface,</li>
+        <li>REST - REpresentational State Transfer,</li>
+        <li>SQL - Structured Query Language,</li>
+        <li>SQLite - SQL database engine,</li>
+        <li>Node.js - JavaScript runtime environment,</li>
+        <li>Svelte - JavaScript framework,</li>
+        <li>Fetch API - JavaScript API,</li>
+        <li>HTML - HyperText Markup Language,</li>
+        <li>CSS - Cascading Style Sheets,</li>
+        <li>JavaScript - programovácí jazyk,</li>
+        <li>Currency - kód měny dle ISO 4217 (EUR, USD, CZK atd.)</li>
+    </ul>
 
     1.4. Odkazy
         <ul>
@@ -43,11 +46,13 @@
         </ul>
 
 2. Celkový popis
+
     **Název produktu:** Uni Bank 
     **Jazyk aplikace:** angličtina 
     **Předpokládané datum dokončení:** 4.5.2023
 
     2.1. Perspektiva produktu
+    <p>&nbsp;</p>
         Aplikace bude vytvořena jako webová aplikace, která bude komunikovat s backendem a databází. Backend bude vytvořen pomocí Node.js a bude komunikovat s databází pomocí knihovny SQLite. Databáze bude vytvořena pomocí jazyka SQL a bude komunikovat s backendem pomocí knihovny SQLite. Frontend bude vytvořen pomocí jazyka JavaScript a moderního frameworku Svelte a bude komunikovat s backendem pomocí Fetch API. Backend bude komunikovat s frontendem pomocí REST API.
     2.2. Funkce produktu
         <ul>
