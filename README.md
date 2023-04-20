@@ -107,7 +107,9 @@
             </li>
         </ul>
         2.2.1. Use Case diagram
-            <img src="data for dsp/Uni_Bank.svg" alt="Use Case diagram" style="max-width:85%;">
+            <p align="center">
+                <img src="data for dsp/Uni_Bank.svg" alt="Use Case diagram" style="max-width:85%;">
+            </p>
     2.3. Charakteristiky uživatele
         <ul>
             <li>Uživatel bude mít přístup do aplikace pouze po přihlášení a ověření,</li>
