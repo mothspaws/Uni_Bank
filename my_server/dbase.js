@@ -151,23 +151,79 @@ function getUsers() {
     });
 }
 
-// Get user's currencies and balance
+// Get user's currencies and balance, including transactions
 function getCurrencies(username) {
     return new Promise((resolve, reject) => {
         db.serialize(() => {
             db.all(
-                `SELECT currency, balance FROM Currencies WHERE username = ?`,
+                `SELECT c.currency, c.balance, t.date_time, t.amount
+           FROM Currencies c
+           LEFT JOIN Transactions t ON c.currency = t.currency AND c.username = t.username
+           WHERE c.username = ?`,
                 [username],
                 function (err, rows) {
                     if (err) {
                         console.log(err);
                     }
-                    resolve(rows);
+                    // Create an object to store currencies with an empty transactions array
+                    const currencies = {};
+                    rows.forEach((row) => {
+                        if (!currencies[row.currency]) {
+                            currencies[row.currency] = {
+                                currency: row.currency,
+                                balance: row.balance,
+                                transactions: [],
+                            };
+                        }
+                        if (row.date_time && row.amount) {
+                            currencies[row.currency].transactions.push({
+                                dateTime: row.date_time,
+                                amount: row.amount,
+                            });
+                        }
+                    });
+                    // Convert the currencies object to an array
+                    resolve(Object.values(currencies));
                 }
             );
         });
     });
 }
+
+// Insert transaction
+function insertTransaction(transaction_id, username, currency, date_time, amount) {
+    db.serialize(() => {
+        db.run(
+            `INSERT INTO Transactions (transaction_id, username, currency, date_time, amount) VALUES (?, ?, ?, ?, ?)`,
+            [transaction_id, username, currency, date_time, amount],
+            function (err) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log("Transaction inserted successfully.");
+                }
+            }
+        );
+    });
+}
+
+// Insert rate
+function insertRate(date, country, currency, quantity, code, rate) {
+    db.serialize(() => {
+        db.run(
+            `INSERT INTO Rates (date, country, currency, quantity, code, rate) VALUES (?, ?, ?, ?, ?, ?)`,
+            [date, country, currency, quantity, code, rate],
+            function (err) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log("Rate inserted successfully.");
+                }
+            }
+        );
+    });
+}
+
 
 // export functions
 module.exports = {
@@ -178,4 +234,6 @@ module.exports = {
     getAuthCode,
     getUsers,
     getCurrencies,
+    insertTransaction,
+    insertRate,
 };

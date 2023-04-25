@@ -1,3 +1,5 @@
+const dbase = require("./dbase.js");
+
 const nodemailer = require("nodemailer");
 const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -29,8 +31,29 @@ function sendEmail(email, code_generated) {
     });
 }
 
+async function isValidLogin(username, password) {
+    const users = await dbase.getUsers();
+    let result = false;
+    let email = null;
+
+    users.forEach(user => {
+        if (user.username === username && user.password === password) {
+            result = true;
+            email = user.email;
+        }
+    });
+    return { result, email };
+}
+
+async function isValidCode(username, code) {
+    const user = await dbase.getAuthCode(username);
+    return String(user.auth_code) === String(code);
+}
+
 // export functions
 module.exports = {
     generateSixDigitCode,
     sendEmail,
+    isValidLogin,
+    isValidCode,
 };
