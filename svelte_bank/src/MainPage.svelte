@@ -1,5 +1,6 @@
 <script>
   import { onMount } from "svelte";
+    import { navigate } from "svelte-routing";
   let username = localStorage.getItem("username");
   let currencies = [];
   let currentCurrencyIndex = 0;
@@ -21,8 +22,8 @@
   }
   });
 
-  async function makePayment(currency, amount) {
-    // Implement payment logic
+  async function makePayment() {
+    navigate("/payment");
   }
 
   async function changeCurrency() {
@@ -36,7 +37,7 @@
   </div>
   {#if currencies.length > 0}
     <div class="operation">
-      <button on:click={() => makePayment(currencies[currentCurrencyIndex].currency, 10)}>
+      <button on:click={() => makePayment()}>
         Make a payment
       </button>
       <button on:click={() => changeCurrency()}>
