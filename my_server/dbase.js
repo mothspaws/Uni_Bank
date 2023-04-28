@@ -29,12 +29,13 @@ function createTables() {
         // Create Rates table
         db.run(`
         CREATE TABLE IF NOT EXISTS Rates (
-          date DATE NOT NULL CONSTRAINT Rates_pk PRIMARY KEY,
-          country VARCHAR(30) NOT NULL,
-          currency VARCHAR(20) NOT NULL,
-          quantity INT NOT NULL,
-          code CHARACTER(4) NOT NULL,
-          rate FLOAT NOT NULL
+            date date NOT NULL,
+            country varchar(30) NOT NULL,
+            currency varchar(20) NOT NULL,
+            quantity int NOT NULL,
+            code character(4) NOT NULL,
+            rate float NOT NULL,
+            CONSTRAINT Rates_pk PRIMARY KEY (date,code)
         );
       `);
 
@@ -217,13 +218,37 @@ function insertRate(date, country, currency, quantity, code, rate) {
                 if (err) {
                     console.log(err);
                 } else {
-                    console.log("Rate inserted successfully.");
+                    console.log(`Rate for ${code} inserted successfully.`);
                 }
             }
         );
     });
 }
 
+// Get rates
+function getRates() {
+    return new Promise((resolve, reject) => {
+        db.serialize(() => {
+            const query = "SELECT * FROM Rates";
+            const rates = [];
+
+            db.each(
+                query,
+                (err, row) => {
+                    if (err) {
+                        console.error("Error getting rates:", err);
+                        reject(err);
+                    } else {
+                        rates.push(row);
+                    }
+                },
+                () => {
+                    resolve(rates);
+                }
+            );
+        });
+    });
+}
 
 // export functions
 module.exports = {
@@ -236,4 +261,5 @@ module.exports = {
     getCurrencies,
     insertTransaction,
     insertRate,
+    getRates,
 };

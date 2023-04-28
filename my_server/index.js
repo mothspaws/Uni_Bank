@@ -47,6 +47,9 @@ dbase.createTables();
   }
 })();
 
+// api_cnb
+const api_cnb = require('./api_cnb.js');
+
 // Middleware
 app.use(express.json()); // Parse JSON request bodies
 app.use(cors()); // Enable CORS
@@ -88,4 +91,11 @@ app.get('/api/user-data/:username', async (req, res) => {
 const port = 3001;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
+  // console log rates dbase.getRates() for each rate in rates
+  // dbase.getRates().then((rates) => {
+  //   rates.forEach((rate) => {
+  //     console.log(rate);
+  //   });
+  // }
+  // );
 });
