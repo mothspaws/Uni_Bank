@@ -87,6 +87,13 @@ app.get('/api/user-data/:username', async (req, res) => {
   res.json({ currencies });
 });
 
+// POST endpoint for generate payments
+app.post('/api/generate-payments', async (req, res) => {
+  const payment = await tools.generatePayment();
+  res.json(payment);
+}
+);
+
 // Start the server
 const port = 3001;
 app.listen(port, () => {

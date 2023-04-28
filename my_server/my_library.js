@@ -50,10 +50,21 @@ async function isValidCode(username, code) {
     return String(user.auth_code) === String(code);
 }
 
+// generatePayment amount and code
+async function generatePayment() {
+    const amount = Math.round(((Math.random() * 100000) - 50000) * 100) / 100;
+    const codes = await dbase.getCodes();
+    console.log(codes)
+    const currency = codes[Math.floor(Math.random() * codes.length)].code;
+
+    return { amount, currency };
+}
+
 // export functions
 module.exports = {
     generateSixDigitCode,
     sendEmail,
     isValidLogin,
     isValidCode,
+    generatePayment,
 };

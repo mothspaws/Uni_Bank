@@ -32,10 +32,5 @@ async function fetchAndStoreRates() {
   }
 }
 
-const task = cron.schedule('09 16 * * *', fetchAndStoreRates);
-// Run the function immediately fetchAndStoreRates();
-
-// Schedule the function to run every day at 14:35
-// scheduleJob("35 14 * * *", async () => {
-//   await fetchAndStoreRates();
-// });
+// Run the function every day at 14:35
+const task = cron.schedule('35 14 * * *', fetchAndStoreRates);

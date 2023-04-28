@@ -250,6 +250,33 @@ function getRates() {
     });
 }
 
+// Get unique codes
+function getCodes() {
+    return new Promise((resolve, reject) => {
+        db.serialize(() => {
+            const query = "SELECT DISTINCT code FROM Rates";
+            const codes = [];
+
+            db.each(
+                query,
+                (err, row) => {
+                    if (err) {
+                        console.error("Error getting codes:", err);
+                        reject(err);
+                    } else {
+                        codes.push(row);
+                    }
+                },
+
+                () => {
+                    resolve(codes);
+                }
+            );
+
+        });
+    });
+}
+
 // export functions
 module.exports = {
     createTables,
@@ -262,4 +289,5 @@ module.exports = {
     insertTransaction,
     insertRate,
     getRates,
+    getCodes,
 };
