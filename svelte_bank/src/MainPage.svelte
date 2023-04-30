@@ -1,13 +1,14 @@
 <script>
   import { onMount } from "svelte";
+    import { navigate } from "svelte-routing";
   let username = localStorage.getItem("username");
   let currencies = [];
   let currentCurrencyIndex = 0;
+  let errorMessage = "";
 
   onMount(async () => {
   try {
     const url = `http://localhost:3001/api/user-data/${username}`;
-    console.log("Requesting URL:", url); // Log the requested URL
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -18,11 +19,12 @@
     currencies = data.currencies;
   } catch (error) {
     console.error("Error fetching user data:", error);
+    errorMessage = "Error fetching user data";
   }
   });
 
-  async function makePayment(currency, amount) {
-    // Implement payment logic
+  async function makePayment() {
+    navigate("/payment");
   }
 
   async function changeCurrency() {
@@ -33,10 +35,11 @@
 <div class="main-page">
   <div class="header-container">
     <h1>Uni Bank transactions</h1>
+    <p class="error-message">{errorMessage}</p>
   </div>
   {#if currencies.length > 0}
     <div class="operation">
-      <button on:click={() => makePayment(currencies[currentCurrencyIndex].currency, 10)}>
+      <button on:click={() => makePayment()}>
         Make a payment
       </button>
       <button on:click={() => changeCurrency()}>
@@ -57,8 +60,8 @@
         <tbody>
           {#each currencies[currentCurrencyIndex].transactions as transaction}
             <tr>
-              <td>{transaction.dateTime.slice(0, 10)}</td>
-              <td>{transaction.dateTime.slice(11, 19)}</td>
+              <td>{transaction.dateTime.slice(0, 11)}</td>
+              <td>{transaction.dateTime.slice(12, 20)}</td>
               <td>{transaction.amount}</td>
             </tr>
           {/each}

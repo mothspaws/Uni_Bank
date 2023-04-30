@@ -3,6 +3,7 @@
     import { navigate } from "svelte-routing";
 
     let code = "";
+    let errorMessage = "";
 
     async function handleSubmit() {
         const username = localStorage.getItem("username");
@@ -21,6 +22,7 @@
                 navigate("/main");
             } else {
                 console.log("Not Authenticated");
+                errorMessage = "Wrong code";
             }
         } catch (error) {
             console.error("Error:", error);
@@ -30,6 +32,7 @@
 
 <div class="auth-form">
     <h2>Authentication</h2>
+    <p class="error-message">{errorMessage}</p>
     <input
         type="text"
         inputmode="numeric"

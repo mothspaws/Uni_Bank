@@ -4,6 +4,7 @@
 
     let username = "";
     let password = "";
+    let errorMessage = "";
 
     async function handleSubmit() {
         /*
@@ -19,7 +20,7 @@
                 localStorage.setItem("username", username); // Save the username in the localStorage
                 navigate("/authentication");
             } else {
-                console.log("Invalid credentials");
+                errorMessage = "User was not found";
             }
         } catch (error) {
             console.error("Error:", error);
@@ -29,6 +30,7 @@
 
 <div class="login-form">
     <h2>Login</h2>
+    <p class="error-message">{errorMessage}</p>
     <input
         type="username"
         placeholder="name.surename"
