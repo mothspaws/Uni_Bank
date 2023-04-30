@@ -55,11 +55,33 @@
         margin: 0 auto;
         padding: 1rem;
         box-sizing: border-box;
+        background-color: white;
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
+            0 10px 10px rgba(0, 0, 0, 0.22);
+        border-radius: 5px;
+    }
+
+    .auth-form h2 {
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+
+    .error-message {
+        color: #ff4d4f;
+        text-align: center;
+        margin-bottom: 1rem;
     }
 
     .auth-form input {
         margin-bottom: 1rem;
         padding: 0.5rem;
+        border: 1px solid #d9d9d9;
+        border-radius: 5px;
+    }
+
+    .auth-form input:focus {
+        border-color: #40a9ff;
+        box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
     }
 
     .auth-form button {
@@ -68,6 +90,12 @@
         color: white;
         border: none;
         cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.2s;
+    }
+
+    .auth-form button:hover {
+        background-color: #0056b3;
     }
 
     /* Responsive styles */
