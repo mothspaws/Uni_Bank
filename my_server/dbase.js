@@ -153,14 +153,15 @@ function getUsers() {
 }
 
 // Get user's currencies and balance, including transactions
-function getCurrencies(username) {
+function getTransactions(username) {
     return new Promise((resolve, reject) => {
         db.serialize(() => {
             db.all(
                 `SELECT c.currency, c.balance, t.date_time, t.amount
-           FROM Currencies c
-           LEFT JOIN Transactions t ON c.currency = t.currency AND c.username = t.username
-           WHERE c.username = ?`,
+                 FROM Currencies c
+                 LEFT JOIN Transactions t ON c.currency = t.currency AND c.username = t.username
+                 WHERE c.username = ?
+                 ORDER BY t.date_time DESC`,
                 [username],
                 function (err, rows) {
                     if (err) {
@@ -185,6 +186,79 @@ function getCurrencies(username) {
                     });
                     // Convert the currencies object to an array
                     resolve(Object.values(currencies));
+                }
+            );
+        });
+    });
+}
+
+// Get max transaction id
+function getMaxTransactionId() {
+    return new Promise((resolve, reject) => {
+        db.serialize(() => {
+            db.get(
+                `SELECT MAX(transaction_id) AS max_id FROM Transactions`,
+                function (err, row) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    resolve(row.max_id);
+                }
+            );
+        });
+    });
+}
+
+// Get user's currencies
+function getCurrencies(username) {
+    return new Promise((resolve, reject) => {
+        db.serialize(() => {
+            db.all(
+                `SELECT DISTINCT currency FROM Currencies WHERE username = ?`,
+                [username],
+                function (err, rows) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    resolve(rows);
+                }
+            );
+        });
+    });
+}
+
+// Get user's balance for a specific currency
+function getBalance(username, currency) {
+    return new Promise((resolve, reject) => {
+        db.serialize(() => {
+            db.get(
+                `SELECT balance FROM Currencies WHERE username = ? AND currency = ?`,
+                [username, currency],
+                function (err, row) {
+                    if (err) {
+                        console.log(err);
+                        reject(err);
+                    }
+                    resolve(row.balance);
+                }
+            );
+        });
+    });
+}
+
+// Update user's balance for a specific currency
+function updateBalance(username, currency, newBalance) {
+    return new Promise((resolve, reject) => {
+        db.serialize(() => {
+            db.run(
+                `UPDATE Currencies SET balance = ? WHERE username = ? AND currency = ?`,
+                [newBalance, username, currency],
+                function (err) {
+                    if (err) {
+                        console.log(err);
+                        reject(err);
+                    }
+                    resolve(true);
                 }
             );
         });
@@ -250,6 +324,27 @@ function getRates() {
     });
 }
 
+// Get latest rate and quantity for a specific currency
+function getLatestRate(currency) {
+    return new Promise((resolve, reject) => {
+        db.serialize(() => {
+            console.log("Currency before query:", currency); // Add this line
+            db.get(
+                `SELECT date, quantity, rate FROM Rates WHERE currency = ? ORDER BY date DESC LIMIT 1`,
+                [currency],
+                function (err, row) {
+                    if (err) {
+                        console.log(err);
+                        reject(err);
+                    }
+                    console.log("Latest rate for currency", currency, ":", row);
+                    resolve(row);
+                }
+            );
+        });
+    });
+}
+
 // Get unique codes
 function getCodes() {
     return new Promise((resolve, reject) => {
@@ -285,9 +380,14 @@ module.exports = {
     insertAuthCode,
     getAuthCode,
     getUsers,
+    getTransactions,
+    getMaxTransactionId,
     getCurrencies,
+    getBalance,
+    updateBalance,
     insertTransaction,
     insertRate,
     getRates,
+    getLatestRate,
     getCodes,
 };

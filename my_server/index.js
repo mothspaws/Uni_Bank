@@ -83,7 +83,7 @@ app.post('/api/authenticate', async (req, res) => {
 // POST endpoint for getting currencies
 app.get('/api/user-data/:username', async (req, res) => {
   const { username } = req.params;
-  const currencies = await dbase.getCurrencies(username);
+  const currencies = await dbase.getTransactions(username);
   res.json({ currencies });
 });
 
@@ -94,15 +94,15 @@ app.post('/api/generate-payments', async (req, res) => {
 }
 );
 
+// POST endpoint for make payments
+app.post('/api/payment', async (req, res) => {
+  const { username, currency, amount } = req.body;
+  const result = await tools.payment(username, currency, amount);
+  res.json({ result });
+});
+
 // Start the server
 const port = 3001;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
-  // console log rates dbase.getRates() for each rate in rates
-  // dbase.getRates().then((rates) => {
-  //   rates.forEach((rate) => {
-  //     console.log(rate);
-  //   });
-  // }
-  // );
 });
