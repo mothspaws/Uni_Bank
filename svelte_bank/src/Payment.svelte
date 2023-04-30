@@ -6,7 +6,19 @@
     let currency = "";
     let errorMessage = "";
     let username = localStorage.getItem("username");
-
+    function getCurrencySymbol(currency) {
+        const currencySymbols = {
+            EUR: "€",
+            INR: "₹",
+            ILS: "₪",
+            JPY: "¥",
+            KRW: "원",
+            USD: "$",
+            GBP: "£",
+            CZK: "Kč",
+        };
+        return currencySymbols[currency] || currency;
+    }
     onMount(async () => {
         try {
             // request server to amount and currency
@@ -75,8 +87,11 @@
     <h1>Payment</h1>
     <p class="error-message">{errorMessage}</p>
     {#if currency != ""}
-        <div class="payment-info">Amount: {amount} {currency}</div>
-        <div>
+        <div class="payment-info">
+            Amount: {amount}
+            {getCurrencySymbol(currency)}
+        </div>
+        <div class="button-wrapper">
             <button class="reject" on:click={handleReject}>Reject</button>
             <button on:click={handleOk}>Ok</button>
         </div>
@@ -89,30 +104,77 @@
     .payment-container {
         display: flex;
         flex-direction: column;
-        align-items: center;
+        position: relative;
         width: 100%;
-        height: 100%;
-        font-family: Arial, sans-serif;
+        max-width: 300px;
+        margin: 0 auto;
+        padding: 1rem;
+        box-sizing: border-box;
+        background-color: white;
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
+            0 10px 10px rgba(0, 0, 0, 0.22);
+        border-radius: 5px;
+    }
+
+    .payment-container h1 {
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+
+    .error-message {
+        color: #ff4d4f;
+        text-align: center;
+        margin-bottom: 1rem;
     }
 
     .payment-info {
         margin-bottom: 20px;
         font-size: 1.5em;
         font-weight: bold;
+        text-align: center;
+        color: #4b6584;
+    }
+
+    .button-wrapper {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin-bottom: 10px;
     }
 
     button {
         font-size: 1em;
         padding: 8px 16px;
-        margin: 4px;
         border: none;
-        border-radius: 4px;
+        border-radius: 5px;
         cursor: pointer;
         background-color: #007bff;
         color: #ffffff;
+        transition: background-color 0.2s;
     }
 
     button.reject {
         background-color: #ff5e5e;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    button.reject:hover {
+        background-color: #e63636;
+    }
+
+    /* Responsive styles */
+    @media (min-width: 768px) {
+        .payment-container {
+            width: 50%;
+        }
+    }
+
+    @media (min-width: 992px) {
+        .payment-container {
+            width: 30%;
+        }
     }
 </style>
