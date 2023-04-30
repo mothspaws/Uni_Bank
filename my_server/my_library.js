@@ -115,7 +115,6 @@ async function makePayment(username, transaction_cur, currency, amount) {
             if (rates === undefined) {
                 throw new Error(`No rates found for currency: ${currency}`);
             }
-            // get newest rate and quantity by date
             updated_amount = (amount * rates.rate) / rates.quantity;
         }
         const newBalance = Math.round((currentBalance + updated_amount) * 100) / 100;

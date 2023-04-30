@@ -325,19 +325,19 @@ function getRates() {
 }
 
 // Get latest rate and quantity for a specific currency
-function getLatestRate(currency) {
+function getLatestRate(code) {
     return new Promise((resolve, reject) => {
         db.serialize(() => {
-            console.log("Currency before query:", currency); // Add this line
+            const query = `SELECT date, quantity, rate FROM Rates WHERE code = ? ORDER BY date DESC LIMIT 1`;
             db.get(
-                `SELECT date, quantity, rate FROM Rates WHERE currency = ? ORDER BY date DESC LIMIT 1`,
-                [currency],
+                query,
+                [code],
                 function (err, row) {
                     if (err) {
                         console.log(err);
                         reject(err);
                     }
-                    console.log("Latest rate for currency", currency, ":", row);
+                    console.log("Latest rate for currency", code, ":", row);
                     resolve(row);
                 }
             );
