@@ -275,7 +275,7 @@ function insertTransaction(transaction_id, username, currency, date_time, amount
                 if (err) {
                     console.log(err);
                 } else {
-                    console.log("Transaction inserted successfully.");
+                    console.log(`Transaction ${transaction_id} inserted successfully.`);
                 }
             }
         );
@@ -337,7 +337,6 @@ function getLatestRate(code) {
                         console.log(err);
                         reject(err);
                     }
-                    console.log("Latest rate for currency", code, ":", row);
                     resolve(row);
                 }
             );
