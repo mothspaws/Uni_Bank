@@ -1,20 +1,21 @@
 <script>
-    import axios from "axios";
+    import * as axios from "axios";
     import { navigate } from "svelte-routing";
 
     let username = "";
     let password = "";
     let errorMessage = "";
+    const API_URL = "https://unibank.herokuapp.com/";
 
     async function handleSubmit() {
         /*
         Send a POST request to the server with the username and password
         */
         try {
-            const response = await axios.post(
-                `${import.meta.env.API_URL}/api/login`,
-                { username, password }
-            );
+            const response = await axios.post(`${API_URL}/api/login`, {
+                username,
+                password,
+            });
 
             if (response.data.success) {
                 localStorage.setItem("username", username); // Save the username in the localStorage

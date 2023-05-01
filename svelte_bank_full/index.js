@@ -4,7 +4,7 @@ const express = require('express');
 const cors = require('cors');
 
 const app = express();
-app.use(express.static(path.join(__dirname, 'client', 'svelte_bank', 'public')));
+app.use(express.static(path.join(__dirname, 'client', 'public')));
 
 // tools
 const tools = require('./my_library.js');
@@ -87,17 +87,14 @@ app.post('/api/payment', async (req, res) => {
   res.json({ result });
 });
 
-// Start the server
-// const port = process.env.PORT || 3001;
-// app.listen(port, () => {
-//   console.log(`Server is running on port ${port}`);
-// });
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
 
 if (process.env.NODE_ENV === "production") {
-  // Serve any static files
-  app.use(express.static(path.join(__dirname, 'client', 'svelte_bank', 'public')));
-  // Handle React routing, return all requests to React app
-  app.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'client', 'svelte_bank', 'public', 'index.html'));
+  app.get(/^\/(?!api).*/, (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'public', 'index.html'));
   });
 }

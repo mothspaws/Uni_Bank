@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { navigate } from "svelte-routing";
+  const API_URL = "https://unibank.herokuapp.com";
   let username = localStorage.getItem("username");
   let currencies = [];
   let currentCurrencyIndex = 0;
@@ -22,7 +23,7 @@
 
   onMount(async () => {
     try {
-      const url = `${import.meta.env.API_URL}/api/user-data/${username}`;
+      const url = `${API_URL}/api/user-data/${username}`;
       const response = await fetch(url);
 
       if (!response.ok) {

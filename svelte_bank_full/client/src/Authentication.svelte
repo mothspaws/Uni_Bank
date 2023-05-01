@@ -1,6 +1,8 @@
 <script>
     import axios from "axios";
     import { navigate } from "svelte-routing";
+    
+    const API_URL = "https://unibank.herokuapp.com";
 
     let code = "";
     let errorMessage = "";
@@ -10,7 +12,7 @@
 
         try {
             const response = await axios.post(
-                `${import.meta.env.API_URL}/api/authenticate`,
+                `${API_URL}/api/authenticate`,
                 {
                     username,
                     code,
