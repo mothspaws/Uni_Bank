@@ -118,11 +118,7 @@ async function controleAmount(username_c, transaction_cur_c, currency_c, amount_
     const balance = await dbase.getBalance(username_c, transaction_cur_c);
     let updated_amount = amount_c;
     if (transaction_cur_c !== currency_c) {
-        // adopt amount
-        console.log("Adopting amount:", amount_c)
         updated_amount = await adoptAmountByCurrency(currency_c, amount_c)
-        console.log("Final amount:", updated_amount)
-        console.log("Balance:", balance)
     }
     return balance + updated_amount > 0;
 }

@@ -1,7 +1,10 @@
+const path = require('path');
+
 const express = require('express');
 const cors = require('cors');
 
 const app = express();
+app.use(express.static(path.join(__dirname, 'client', 'svelte_bank', 'public')));
 
 // tools
 const tools = require('./my_library.js');
@@ -85,7 +88,7 @@ app.post('/api/payment', async (req, res) => {
 });
 
 // Start the server
-const port = 3001;
+const port = process.env.PORT || 3001;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

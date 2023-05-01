@@ -22,7 +22,7 @@
     onMount(async () => {
         try {
             // request server to amount and currency
-            const url = `http://localhost:3001/api/generate-payments`;
+            const url = `${import.meta.env.API_URL}/api/generate-payments`;
             console.log("Requesting URL:", url); // Log the requested URL
             const response = await fetch(url, {
                 method: "POST",
@@ -88,7 +88,7 @@
     <p class="error-message">{errorMessage}</p>
     {#if currency != ""}
         <div class="payment-info">
-            Amount: {amount}
+            {amount}
             {getCurrencySymbol(currency)}
         </div>
         <div class="button-wrapper">
