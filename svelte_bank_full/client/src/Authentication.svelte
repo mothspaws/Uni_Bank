@@ -10,7 +10,7 @@
 
         try {
             const response = await axios.post(
-                "http://localhost:3001/api/authenticate",
+                `${import.meta.env.API_URL}/api/authenticate`,
                 {
                     username,
                     code,

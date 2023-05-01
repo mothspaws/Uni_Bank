@@ -22,7 +22,7 @@
 
   onMount(async () => {
     try {
-      const url = `http://localhost:3001/api/user-data/${username}`;
+      const url = `${import.meta.env.API_URL}/api/user-data/${username}`;
       const response = await fetch(url);
 
       if (!response.ok) {

@@ -12,7 +12,7 @@
         */
         try {
             const response = await axios.post(
-                "http://localhost:3001/api/login",
+                `${import.meta.env.API_URL}/api/login`,
                 { username, password }
             );
 
