@@ -101,8 +101,6 @@ var app = (function () {
                 result[k] = props[k];
         return result;
     }
-
-    new Set();
     function append(target, node) {
         target.appendChild(node);
     }
@@ -156,10 +154,6 @@ var app = (function () {
         e.initCustomEvent(type, bubbles, cancelable, detail);
         return e;
     }
-
-    // we need to store the information for multiple documents because a Svelte application could also contain iframes
-    // https://github.com/sveltejs/svelte/issues/3624
-    new Map();
 
     let current_component;
     function set_current_component(component) {
@@ -404,39 +398,6 @@ var app = (function () {
     function get_spread_object(spread_props) {
         return typeof spread_props === 'object' && spread_props !== null ? spread_props : {};
     }
-
-    const _boolean_attributes = [
-        'allowfullscreen',
-        'allowpaymentrequest',
-        'async',
-        'autofocus',
-        'autoplay',
-        'checked',
-        'controls',
-        'default',
-        'defer',
-        'disabled',
-        'formnovalidate',
-        'hidden',
-        'inert',
-        'ismap',
-        'loop',
-        'multiple',
-        'muted',
-        'nomodule',
-        'novalidate',
-        'open',
-        'playsinline',
-        'readonly',
-        'required',
-        'reversed',
-        'selected'
-    ];
-    /**
-     * List of HTML boolean attributes (e.g. `<input disabled>`).
-     * Source: https://html.spec.whatwg.org/multipage/indices.html
-     */
-    new Set([..._boolean_attributes]);
     function create_component(block) {
         block && block.c();
     }
@@ -3856,23 +3817,23 @@ var app = (function () {
     			button = element("button");
     			button.textContent = "Login";
     			attr_dev(h2, "class", "svelte-1v1cm4r");
-    			add_location(h2, file$3, 31, 4, 861);
+    			add_location(h2, file$3, 31, 4, 866);
     			attr_dev(p, "class", "error-message svelte-1v1cm4r");
-    			add_location(p, file$3, 32, 4, 880);
+    			add_location(p, file$3, 32, 4, 885);
     			attr_dev(input0, "type", "username");
     			attr_dev(input0, "placeholder", "name.surename");
     			input0.required = true;
     			attr_dev(input0, "class", "svelte-1v1cm4r");
-    			add_location(input0, file$3, 33, 4, 928);
+    			add_location(input0, file$3, 33, 4, 933);
     			attr_dev(input1, "type", "password");
     			attr_dev(input1, "placeholder", "password");
     			input1.required = true;
     			attr_dev(input1, "class", "svelte-1v1cm4r");
-    			add_location(input1, file$3, 39, 4, 1053);
+    			add_location(input1, file$3, 39, 4, 1058);
     			attr_dev(button, "class", "svelte-1v1cm4r");
-    			add_location(button, file$3, 46, 4, 1218);
+    			add_location(button, file$3, 46, 4, 1223);
     			attr_dev(div, "class", "login-form svelte-1v1cm4r");
-    			add_location(div, file$3, 30, 0, 832);
+    			add_location(div, file$3, 30, 0, 837);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -3945,7 +3906,7 @@ var app = (function () {
     Send a POST request to the server with the username and password
     */
     		try {
-    			const response = await axios$1.post("http://localhost:3001/api/login", { username, password });
+    			const response = await axios$1.post(`${undefined.API_URL}/api/login`, { username, password });
 
     			if (response.data.success) {
     				localStorage.setItem("username", username); // Save the username in the localStorage
@@ -4049,9 +4010,9 @@ var app = (function () {
     			button = element("button");
     			button.textContent = "Authenticate";
     			attr_dev(h2, "class", "svelte-1pasy9z");
-    			add_location(h2, file$2, 33, 4, 835);
+    			add_location(h2, file$2, 33, 4, 840);
     			attr_dev(p, "class", "error-message svelte-1pasy9z");
-    			add_location(p, file$2, 34, 4, 863);
+    			add_location(p, file$2, 34, 4, 868);
     			attr_dev(input, "type", "text");
     			attr_dev(input, "inputmode", "numeric");
     			attr_dev(input, "pattern", "[0-9]*");
@@ -4060,11 +4021,11 @@ var app = (function () {
     			attr_dev(input, "placeholder", "6-digit code");
     			input.required = true;
     			attr_dev(input, "class", "svelte-1pasy9z");
-    			add_location(input, file$2, 35, 4, 911);
+    			add_location(input, file$2, 35, 4, 916);
     			attr_dev(button, "class", "svelte-1pasy9z");
-    			add_location(button, file$2, 45, 4, 1124);
+    			add_location(button, file$2, 45, 4, 1129);
     			attr_dev(div, "class", "auth-form svelte-1pasy9z");
-    			add_location(div, file$2, 32, 0, 807);
+    			add_location(div, file$2, 32, 0, 812);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -4127,7 +4088,7 @@ var app = (function () {
     		const username = localStorage.getItem("username");
 
     		try {
-    			const response = await axios$1.post("http://localhost:3001/api/authenticate", { username, code });
+    			const response = await axios$1.post(`${undefined.API_URL}/api/authenticate`, { username, code });
 
     			if (response.data.success) {
     				console.log("Authenticated");
@@ -4205,7 +4166,7 @@ var app = (function () {
     		c: function create() {
     			div = element("div");
     			div.textContent = "Loading...";
-    			add_location(div, file$1, 93, 4, 2476);
+    			add_location(div, file$1, 93, 4, 2481);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -4300,30 +4261,30 @@ var app = (function () {
     			}
 
     			attr_dev(h2, "class", "svelte-wl2vd6");
-    			add_location(h2, file$1, 55, 6, 1362);
+    			add_location(h2, file$1, 55, 6, 1367);
     			attr_dev(button0, "class", "change-currency svelte-wl2vd6");
-    			add_location(button0, file$1, 59, 6, 1507);
+    			add_location(button0, file$1, 59, 6, 1512);
     			attr_dev(div0, "class", "balance-and-change-currency svelte-wl2vd6");
-    			add_location(div0, file$1, 54, 4, 1314);
+    			add_location(div0, file$1, 54, 4, 1319);
     			attr_dev(button1, "class", "payment svelte-wl2vd6");
-    			add_location(button1, file$1, 66, 8, 1702);
+    			add_location(button1, file$1, 66, 8, 1707);
     			attr_dev(h3, "class", "svelte-wl2vd6");
-    			add_location(h3, file$1, 64, 6, 1660);
+    			add_location(h3, file$1, 64, 6, 1665);
     			attr_dev(th0, "class", "svelte-wl2vd6");
-    			add_location(th0, file$1, 73, 12, 1879);
+    			add_location(th0, file$1, 73, 12, 1884);
     			attr_dev(th1, "class", "svelte-wl2vd6");
-    			add_location(th1, file$1, 74, 12, 1905);
+    			add_location(th1, file$1, 74, 12, 1910);
     			attr_dev(th2, "class", "svelte-wl2vd6");
-    			add_location(th2, file$1, 75, 12, 1931);
+    			add_location(th2, file$1, 75, 12, 1936);
     			attr_dev(tr, "class", "svelte-wl2vd6");
-    			add_location(tr, file$1, 72, 10, 1862);
+    			add_location(tr, file$1, 72, 10, 1867);
     			attr_dev(thead, "class", "svelte-wl2vd6");
-    			add_location(thead, file$1, 71, 8, 1844);
-    			add_location(tbody, file$1, 78, 8, 1988);
+    			add_location(thead, file$1, 71, 8, 1849);
+    			add_location(tbody, file$1, 78, 8, 1993);
     			attr_dev(table, "class", "history svelte-wl2vd6");
-    			add_location(table, file$1, 70, 6, 1812);
+    			add_location(table, file$1, 70, 6, 1817);
     			attr_dev(div1, "class", "operations svelte-wl2vd6");
-    			add_location(div1, file$1, 63, 4, 1629);
+    			add_location(div1, file$1, 63, 4, 1634);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div0, anchor);
@@ -4443,15 +4404,15 @@ var app = (function () {
     			t4 = text(t4_value);
     			t5 = space();
     			attr_dev(td0, "class", "svelte-wl2vd6");
-    			add_location(td0, file$1, 81, 14, 2106);
+    			add_location(td0, file$1, 81, 14, 2111);
     			attr_dev(td1, "class", "svelte-wl2vd6");
-    			add_location(td1, file$1, 82, 14, 2165);
+    			add_location(td1, file$1, 82, 14, 2170);
     			attr_dev(td2, "class", "svelte-wl2vd6");
     			toggle_class(td2, "positive", /*transaction*/ ctx[8].amount >= 0);
     			toggle_class(td2, "negative", /*transaction*/ ctx[8].amount < 0);
-    			add_location(td2, file$1, 83, 14, 2225);
+    			add_location(td2, file$1, 83, 14, 2230);
     			attr_dev(tr, "class", "svelte-wl2vd6");
-    			add_location(tr, file$1, 80, 12, 2087);
+    			add_location(tr, file$1, 80, 12, 2092);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, tr, anchor);
@@ -4522,13 +4483,13 @@ var app = (function () {
     			t2 = text(/*errorMessage*/ ctx[2]);
     			t3 = space();
     			if_block.c();
-    			add_location(h1, file$1, 50, 4, 1192);
+    			add_location(h1, file$1, 50, 4, 1197);
     			attr_dev(p, "class", "error-message svelte-wl2vd6");
-    			add_location(p, file$1, 51, 4, 1227);
+    			add_location(p, file$1, 51, 4, 1232);
     			attr_dev(div0, "class", "header-container svelte-wl2vd6");
-    			add_location(div0, file$1, 49, 2, 1157);
+    			add_location(div0, file$1, 49, 2, 1162);
     			attr_dev(div1, "class", "main-page svelte-wl2vd6");
-    			add_location(div1, file$1, 48, 0, 1131);
+    			add_location(div1, file$1, 48, 0, 1136);
     		},
     		l: function claim(nodes) {
     			throw new Error_1$1("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -4602,7 +4563,7 @@ var app = (function () {
 
     	onMount(async () => {
     		try {
-    			const url = `http://localhost:3001/api/user-data/${username}`;
+    			const url = `${undefined.API_URL}/api/user-data/${username}`;
     			const response = await fetch(url);
 
     			if (!response.ok) {
@@ -4695,7 +4656,7 @@ var app = (function () {
     		c: function create() {
     			div = element("div");
     			div.textContent = "Loading...";
-    			add_location(div, file, 98, 8, 2945);
+    			add_location(div, file, 98, 8, 2950);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -4746,13 +4707,13 @@ var app = (function () {
     			button1 = element("button");
     			button1.textContent = "Ok";
     			attr_dev(div0, "class", "payment-info svelte-1cug3li");
-    			add_location(div0, file, 89, 8, 2641);
+    			add_location(div0, file, 89, 8, 2646);
     			attr_dev(button0, "class", "reject svelte-1cug3li");
-    			add_location(button0, file, 94, 12, 2795);
+    			add_location(button0, file, 94, 12, 2800);
     			attr_dev(button1, "class", "svelte-1cug3li");
-    			add_location(button1, file, 95, 12, 2870);
+    			add_location(button1, file, 95, 12, 2875);
     			attr_dev(div1, "class", "button-wrapper svelte-1cug3li");
-    			add_location(div1, file, 93, 8, 2754);
+    			add_location(div1, file, 93, 8, 2759);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div0, anchor);
@@ -4825,11 +4786,11 @@ var app = (function () {
     			t3 = space();
     			if_block.c();
     			attr_dev(h1, "class", "svelte-1cug3li");
-    			add_location(h1, file, 86, 4, 2543);
+    			add_location(h1, file, 86, 4, 2548);
     			attr_dev(p, "class", "error-message svelte-1cug3li");
-    			add_location(p, file, 87, 4, 2564);
+    			add_location(p, file, 87, 4, 2569);
     			attr_dev(div, "class", "payment-container svelte-1cug3li");
-    			add_location(div, file, 85, 0, 2507);
+    			add_location(div, file, 85, 0, 2512);
     		},
     		l: function claim(nodes) {
     			throw new Error_1("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -4903,7 +4864,7 @@ var app = (function () {
     	onMount(async () => {
     		try {
     			// request server to amount and currency
-    			const url = `http://localhost:3001/api/generate-payments`;
+    			const url = `${undefined.API_URL}/api/generate-payments`;
 
     			console.log("Requesting URL:", url); // Log the requested URL
     			const response = await fetch(url, { method: "POST" });

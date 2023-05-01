@@ -88,7 +88,16 @@ app.post('/api/payment', async (req, res) => {
 });
 
 // Start the server
-const port = process.env.PORT || 3001;
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+// const port = process.env.PORT || 3001;
+// app.listen(port, () => {
+//   console.log(`Server is running on port ${port}`);
+// });
+
+if (process.env.NODE_ENV === "production") {
+  // Serve any static files
+  app.use(express.static(path.join(__dirname, 'client', 'svelte_bank', 'public')));
+  // Handle React routing, return all requests to React app
+  app.get('*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'client', 'svelte_bank', 'public', 'index.html'));
+  });
+}
