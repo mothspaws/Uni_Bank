@@ -4,7 +4,6 @@ const express = require('express');
 const cors = require('cors');
 
 const app = express();
-app.use(express.static(path.join(__dirname, 'client', 'public')));
 
 // tools
 const tools = require('./my_library.js');
@@ -21,15 +20,15 @@ dbase.createTables();
     dbase.insertCurrency("brusinka", "KRW", 2732240.44);
 
     // Insert transactions for brusinka
-    dbase.insertTransaction(1, "brusinka", "CZK", "11. 12. 2022 13:24:43", -90.25);
-    dbase.insertTransaction(2, "brusinka", "EUR", "11. 01. 2023 12:01:03", 3.2);
-    dbase.insertTransaction(3, "brusinka", "KRW", "12. 02. 2023 14:52:13", -12000.45);
+    dbase.insertTransaction(1, "brusinka", "CZK", new Date("2022-12-11 13:24:43").getTime(), -90.25);
+    dbase.insertTransaction(2, "brusinka", "EUR", new Date("2022-01-01 12:01:03").getTime(), 3.2);
+    dbase.insertTransaction(3, "brusinka", "KRW", new Date("2023-02-01 14:52:13").getTime(), -12000.45);
 
     dbase.insertUser("tester_glob", "qwerty1234", "alpatkina.ec@mail.ru", 'CZK', 1200.1);
     dbase.insertCurrency("tester_glob", "EUR", 183);
     // Insert transactions for tester_glob
-    dbase.insertTransaction(4, "tester_glob", "CZK", "13. 01. 2023 15:17:09", -50);
-    dbase.insertTransaction(5, "tester_glob", "EUR", "14. 03. 2023 12:08:56", 2.1);
+    dbase.insertTransaction(4, "tester_glob", "CZK", new Date("2023-01-13 15:17:09").getTime(), -50);
+    dbase.insertTransaction(5, "tester_glob", "EUR", new Date("2023-03-14 12:08:56").getTime(), 2.1);
   }
 })();
 
@@ -88,13 +87,15 @@ app.post('/api/payment', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
 
+app.use(express.static(path.join(__dirname, 'client', 'public')));
 
 if (process.env.NODE_ENV === "production") {
   app.get(/^\/(?!api).*/, (req, res) => {
     res.sendFile(path.join(__dirname, 'client', 'public', 'index.html'));
   });
 }
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

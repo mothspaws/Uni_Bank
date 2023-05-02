@@ -140,9 +140,9 @@ async function makePayment(username_for, using_currency, payment_currency, spent
         } catch (error) {
             id = 1;
         }
-        const datetime = new Date().toLocaleString("cs-CZ", { timeZone: "Europe/Prague" });
+        const datetime = new Date()//.toLocaleString("cs-CZ", { timeZone: "Europe/Prague" });
 
-        dbase.insertTransaction(id, username_for, using_currency, datetime, Math.round(updated_amount * 100) / 100);
+        dbase.insertTransaction(id, username_for, using_currency, datetime.getTime(), Math.round(updated_amount * 100) / 100);
         return true;
     } catch (error) {
         console.error("Error making payment:", error);

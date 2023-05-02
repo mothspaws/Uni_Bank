@@ -1,8 +1,6 @@
 <script>
     import { navigate } from "svelte-routing";
     import { onMount } from "svelte";
-
-    const API_URL = "https://unibank.herokuapp.com";
     let amount = 0;
     let currency = "";
     let errorMessage = "";
@@ -23,7 +21,7 @@
     onMount(async () => {
         try {
             // request server to amount and currency
-            const url = `${API_URL}/api/generate-payments`;
+            const url = "https://unibank.herokuapp.com/api/generate-payments";
             console.log("Requesting URL:", url); // Log the requested URL
             const response = await fetch(url, {
                 method: "POST",
@@ -47,7 +45,7 @@
         console.log("Payment accepted");
 
         try {
-            const url = `${API_URL}/api/payment`;
+            const url = "https://unibank.herokuapp.com/api/payment";
             const response = await fetch(url, {
                 method: "POST",
                 headers: {

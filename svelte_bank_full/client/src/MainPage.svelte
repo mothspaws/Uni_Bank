@@ -1,7 +1,6 @@
 <script>
   import { onMount } from "svelte";
   import { navigate } from "svelte-routing";
-  const API_URL = "https://unibank.herokuapp.com";
   let username = localStorage.getItem("username");
   let currencies = [];
   let currentCurrencyIndex = 0;
@@ -21,9 +20,24 @@
     return currencySymbols[currency] || currency;
   }
 
+  function formatDate(timeStamp) {
+    const date = new Date(timeStamp);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed, so we add 1
+    const year = date.getFullYear();
+
+    const time = date.toLocaleTimeString("cs-CZ", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit"
+    });
+
+    return {date: `${day}.${month}.${year}`, time};
+  }
+
   onMount(async () => {
     try {
-      const url = `${API_URL}/api/user-data/${username}`;
+      const url = `https://unibank.herokuapp.com/api/user-data/${username}`;
       const response = await fetch(url);
 
       if (!response.ok) {
@@ -32,6 +46,7 @@
 
       const data = await response.json();
       currencies = data.currencies;
+      console.log(currencies[0].transaction);
     } catch (error) {
       console.error("Error fetching user data:", error);
       errorMessage = "Error fetching user data";
@@ -80,8 +95,10 @@
         <tbody>
           {#each currencies[currentCurrencyIndex].transactions as transaction}
             <tr>
-              <td>{transaction.dateTime.slice(0, 11)}</td>
-              <td>{transaction.dateTime.slice(12, 20)}</td>
+              <td
+                >{formatDate(transaction.dateTime).date}</td
+              >
+              <td>{formatDate(transaction.dateTime).time}</td>
               <td
                 class:positive={transaction.amount >= 0}
                 class:negative={transaction.amount < 0}>{transaction.amount}</td

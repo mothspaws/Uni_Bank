@@ -1,18 +1,16 @@
 <script>
     import * as axios from "axios";
     import { navigate } from "svelte-routing";
-
     let username = "";
     let password = "";
     let errorMessage = "";
-    const API_URL = "https://unibank.herokuapp.com/";
 
     async function handleSubmit() {
         /*
         Send a POST request to the server with the username and password
         */
         try {
-            const response = await axios.post(`${API_URL}/api/login`, {
+            const response = await axios.post("https://unibank.herokuapp.com/api/login", {
                 username,
                 password,
             });
