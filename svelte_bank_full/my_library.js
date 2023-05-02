@@ -118,11 +118,7 @@ async function controleAmount(username_c, transaction_cur_c, currency_c, amount_
     const balance = await dbase.getBalance(username_c, transaction_cur_c);
     let updated_amount = amount_c;
     if (transaction_cur_c !== currency_c) {
-        // adopt amount
-        console.log("Adopting amount:", amount_c)
         updated_amount = await adoptAmountByCurrency(currency_c, amount_c)
-        console.log("Final amount:", updated_amount)
-        console.log("Balance:", balance)
     }
     return balance + updated_amount > 0;
 }
@@ -144,9 +140,9 @@ async function makePayment(username_for, using_currency, payment_currency, spent
         } catch (error) {
             id = 1;
         }
-        const datetime = new Date().toLocaleString("cs-CZ", { timeZone: "Europe/Prague" });
+        const datetime = new Date()//.toLocaleString("cs-CZ", { timeZone: "Europe/Prague" });
 
-        dbase.insertTransaction(id, username_for, using_currency, datetime, Math.round(updated_amount * 100) / 100);
+        dbase.insertTransaction(id, username_for, using_currency, datetime.getTime(), Math.round(updated_amount * 100) / 100);
         return true;
     } catch (error) {
         console.error("Error making payment:", error);

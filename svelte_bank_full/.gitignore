@@ -1,6 +1,7 @@
 ### custom files ###
-svelte_bank_full/node_modules/
-svelte_bank_full/client/node_modules/
+# node modules
+node_modules/
+client/node_modules/
 
 ### macOS ###
 # General
@@ -572,4 +573,4 @@ FodyWeavers.xsd
 *.sln.iml
 
 ### VisualStudio Patch ###
-# Additional files built by Visual Studio
+# Additional files built by Visual Studionode_modules

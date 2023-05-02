@@ -1,7 +1,6 @@
 <script>
     import { navigate } from "svelte-routing";
     import { onMount } from "svelte";
-
     let amount = 0;
     let currency = "";
     let errorMessage = "";
@@ -22,7 +21,7 @@
     onMount(async () => {
         try {
             // request server to amount and currency
-            const url = `http://localhost:3001/api/generate-payments`;
+            const url = "https://unibank.herokuapp.com/api/generate-payments";
             console.log("Requesting URL:", url); // Log the requested URL
             const response = await fetch(url, {
                 method: "POST",
@@ -46,7 +45,7 @@
         console.log("Payment accepted");
 
         try {
-            const url = `http://localhost:3001/api/payment`;
+            const url = "https://unibank.herokuapp.com/api/payment";
             const response = await fetch(url, {
                 method: "POST",
                 headers: {
@@ -88,7 +87,7 @@
     <p class="error-message">{errorMessage}</p>
     {#if currency != ""}
         <div class="payment-info">
-            Amount: {amount}
+            {amount}
             {getCurrencySymbol(currency)}
         </div>
         <div class="button-wrapper">
