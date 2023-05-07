@@ -86,6 +86,12 @@ app.post('/api/payment', async (req, res) => {
   res.json({ result });
 });
 
+// POST endpoint for getting all currencies
+app.get('/api/currencies', async (req, res) => {
+  const currencies = await dbase.getAllCurrencies();
+  res.json({ currencies });
+});
+
 const PORT = process.env.PORT || 3001;
 
 app.use(express.static(path.join(__dirname, 'client', 'public')));
