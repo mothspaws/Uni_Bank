@@ -50,25 +50,6 @@ async function isValidCode(username, code) {
     return String(user.auth_code) === String(code);
 }
 
-// generatePayment amount and code
-async function generatePayment() {
-    const amount = Math.round(((Math.random() * 60000) - 30000) * 100) / 100;
-    const codes = await dbase.getCodes();
-    codes.push({ code: "CZK" }); // add czk to codes
-    codes.push({ code: "EUR" });
-    codes.push({ code: "USD" });
-    codes.push({ code: "CZK" });
-
-    if (codes.length === 0) {
-        console.error("Error: codes array is empty");
-        return { amount: 0, currency: '' }; // Return an empty result if the codes array is empty
-    }
-
-    const currency = codes[Math.floor(Math.random() * codes.length)].code;
-
-    return { amount, currency };
-}
-
 // payment
 async function payment(username, currency, amount) {
     try {
@@ -157,6 +138,5 @@ module.exports = {
     sendEmail,
     isValidLogin,
     isValidCode,
-    generatePayment,
     payment,
 };
