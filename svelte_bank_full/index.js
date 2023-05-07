@@ -72,13 +72,6 @@ app.get('/api/user-data/:username', async (req, res) => {
   res.json({ currencies });
 });
 
-// POST endpoint for generate payments
-app.post('/api/generate-payments', async (req, res) => {
-  const payment = await tools.generatePayment();
-  res.json(payment);
-}
-);
-
 // POST endpoint for make payments
 app.post('/api/payment', async (req, res) => {
   const { username, currency, amount } = req.body;
