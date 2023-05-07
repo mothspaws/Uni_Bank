@@ -32,7 +32,7 @@
     <p class="error-message">{errorMessage}</p>
     <input
         type="username"
-        placeholder="name.surename"
+        placeholder="username"
         bind:value={username}
         required
     />
