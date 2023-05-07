@@ -1,6 +1,8 @@
 ### custom files ###
 svelte_bank_full/node_modules/
-svelte_bank_full/client/node_modules/
+svelte_bank_full/client/node_modules/\
+data for dsp/*
+README.md
 
 ### macOS ###
 # General
