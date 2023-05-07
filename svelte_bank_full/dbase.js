@@ -227,6 +227,23 @@ function getCurrencies(username) {
     });
 }
 
+// Get all existing currensies
+function getAllCurrencies() {
+    return new Promise((resolve, reject) => {
+        db.serialize(() => {
+            db.all(
+                `SELECT DISTINCT code FROM Rates`,
+                function (err, rows) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    resolve(rows);
+                }
+            );
+        });
+    });
+}
+
 // Get user's balance for a specific currency
 function getBalance(username, currency) {
     return new Promise((resolve, reject) => {
@@ -382,6 +399,7 @@ module.exports = {
     getTransactions,
     getMaxTransactionId,
     getCurrencies,
+    getAllCurrencies,
     getBalance,
     updateBalance,
     insertTransaction,
