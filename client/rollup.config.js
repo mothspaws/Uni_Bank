@@ -30,7 +30,7 @@ function serve() {
 }
 
 export default {
-	input: 'svelte_bank_full/client/src/main.js',
+	input: 'client/src/main.js',
 	output: {
 		sourcemap: true,
 		format: 'iife',
