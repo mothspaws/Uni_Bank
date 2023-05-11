@@ -65,7 +65,6 @@
 
       const data = await response.json();
       existing_currencies = data.currencies;
-
     } catch (error) {
       console.error("Error fetching currencies:", error);
       errorMessage = "Error fetching currencies";
