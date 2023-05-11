@@ -41,8 +41,6 @@
     // request server to amount and currency
     try {
       const url = `https://unibank.herokuapp.com/api/user-data/${username}`;
-      // localhost
-      // const url = `http://localhost:3001/api/user-data/${username}`;
       const response = await fetch(url);
 
       if (!response.ok) {
@@ -59,8 +57,6 @@
     // request server to existing currencies
     try {
       const url = `https://unibank.herokuapp.com/api/currencies`;
-      // localhost
-      // const url = `http://localhost:3001/api/currencies`;
       const response = await fetch(url);
 
       if (!response.ok) {
@@ -69,7 +65,6 @@
 
       const data = await response.json();
       existing_currencies = data.currencies;
-
     } catch (error) {
       console.error("Error fetching currencies:", error);
       errorMessage = "Error fetching currencies";
@@ -85,7 +80,6 @@
       // convert amount to a number
       amount = Number(amount);
       try {
-        // const url = "http://localhost:3001/api/payment";
         const url = "https://unibank.herokuapp.com/api/payment";
         const response = await fetch(url, {
           method: "POST",
