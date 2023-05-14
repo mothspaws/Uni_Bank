@@ -16,20 +16,25 @@ function generateSixDigitCode() {
 
 // email sender
 function sendEmail(email, code_generated) {
-    const mailOptions = {
-        from: "trustedsignin@gmail.com",
-        to: email,
-        subject: "Your 6-digit authentication code",
-        text: `Your authentication code is: ${code_generated}`,
-    };
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            console.error("Error sending email:", error);
-        } else {
-            console.log("Email sent:", info.response);
-        }
+    return new Promise((resolve, reject) => {
+        const mailOptions = {
+            from: "trustedsignin@gmail.com",
+            to: email,
+            subject: "Your 6-digit authentication code",
+            text: `Your authentication code is: ${code_generated}`,
+        };
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.error("Error sending email:", error);
+                reject(error);
+            } else {
+                console.log("Email sent:", info.response);
+                resolve();
+            }
+        });
     });
 }
+
 
 async function isValidLogin(username, password) {
     const users = await dbase.getUsers();
@@ -133,10 +138,15 @@ async function makePayment(username_for, using_currency, payment_currency, spent
 
 
 // export functions
+// export functions
 module.exports = {
     generateSixDigitCode,
     sendEmail,
     isValidLogin,
     isValidCode,
     payment,
+    haveUserCurrency,
+    adoptAmountByCurrency,
+    controleAmount,
+    makePayment
 };

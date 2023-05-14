@@ -363,6 +363,7 @@ function getLatestRate(code) {
 
 // export functions
 module.exports = {
+    db,
     createTables,
     insertUser,
     insertCurrency,

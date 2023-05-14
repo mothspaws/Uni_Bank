@@ -47,12 +47,18 @@ app.post('/api/login', async (req, res) => {
   if (result) {
     code_generated = tools.generateSixDigitCode();
     dbase.insertAuthCode(username, code_generated);
-    tools.sendEmail(email, code_generated);
-    res.json({ success: true });
+    try {
+      await tools.sendEmail(email, code_generated);
+      res.json({ success: true });
+    } catch (error) {
+      // Handle the error accordingly, maybe send a specific error message or status code
+      res.json({ success: false });
+    }
   } else {
     res.json({ success: false });
   }
 });
+
 
 // POST endpoint for authentication
 app.post('/api/authenticate', async (req, res) => {
@@ -95,6 +101,9 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}
+module.exports = app;
