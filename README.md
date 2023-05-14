@@ -5,22 +5,20 @@
 
 1. Úvod
 
-    1.1. Účel
-    <p>&nbsp;</p>
-        Cílem semestrální práce STIN je vytvoření aplikace, která simuluje komunikaci uživatele s bankou a umožňuje provádět platby a zobrazovat historii účtu. Aplikace bude se skládat z backendu a frontendu, které budou vzájemně komunikovat a nacházet se na různých zařízeních. Součásti testování budou vytvořené testovací uživatelé. Oni se budou přihlašovat do aplikace, provádět transakce a ověřovat správnost funkčností systému.
+	1.1. Účel
+         Cílem semestrální práce STIN je vytvoření aplikace, která simuluje komunikaci uživatele s bankou a umožňuje provádět platby a zobrazovat historii účtu. Aplikace bude se skládat z backendu a frontendu, které budou vzájemně komunikovat a nacházet se na různých zařízeních. Součásti testování budou vytvořené testovací uživatelé. Oni se budou přihlašovat do aplikace, provádět transakce a ověřovat správnost funkčností systému.
 
     1.2. Rozsah produktu
-    <p>&nbsp;</p>
-        1.2.1. Funkční požadavky
-            <ul>
-                <li>Uživatel se může přihlásit do aplikace,</li>
-                <li>Uživatel může být ověřen,</li>
-                <li>Uživatel může provádět platby,</li>
-                <li>Uživatel může zobrazovat historii účtu,</li>
-                <li>Uživatel může zobrazit jakoukoliv ze svých měn.</li>
-            </ul>
-        1.2.2. Použití
-            Aplikace bude použitá jako výsledek semestrální práce a jako potvrzení dosazených znalosti z předmětu STIN.
+    
+	1.2.1. Funkční požadavky
+		- Uživatel se může přihlásit do aplikace,
+		- Uživatel může být ověřen,
+		- Uživatel může provádět platby,
+		- Uživatel může zobrazovat historii účtu,
+		- Uživatel může zobrazit jakoukoliv ze svých měn.
+
+	1.2.2. Použití
+		Aplikace bude použitá jako výsledek semestrální práce a jako potvrzení dosazených znalosti z předmětu STIN.
 
     1.3. Definice, zkratky, zkratková slova
     <ul>
@@ -47,83 +45,49 @@
 
 2. Celkový popis
 
-    **Název produktu:** Uni Bank 
+    **Název produktu:** Uni Bank
+     
     **Jazyk aplikace:** angličtina 
-    **Předpokládané datum dokončení:** 4.5.2023
-
+    
+    **Předpokládané datum dokončení:** 18.5.2023
+    
     2.1. Perspektiva produktu
-    <p>&nbsp;</p>
         Aplikace bude vytvořena jako webová aplikace, která bude komunikovat s backendem a databází. Backend bude vytvořen pomocí Node.js a bude komunikovat s databází pomocí knihovny SQLite. Databáze bude vytvořena pomocí jazyka SQL a bude komunikovat s backendem pomocí knihovny SQLite. Frontend bude vytvořen pomocí jazyka JavaScript a moderního frameworku Svelte a bude komunikovat s backendem pomocí Fetch API. Backend bude komunikovat s frontendem pomocí REST API.
+
     2.2. Funkce produktu
-        <ul>
-            <li>Přihlášení
-            <p>&nbsp;</p>
-                Uživatel musí zadat přihlašovací údaje.
-                    Pokud v systému bude nalezen uživatel s odpovídajícími údají: 
-                        - bude přesměrován na stránku s ověřením,
-                        - odešle se mu email s ověřovácím kódem.
-                    Pokud v systému nebude nalezen uživatel s odpovídajícími údají:
-                        - uživatelovi se zobrazí chybová hláška `user was not found`.
-            </li>
-            <li>Ověření
-            <p>&nbsp;</p>
-                Uživatel musí zadat ověřovací kód.
-                    Pokud bude ověřovací kód správný:
-                        - bude přesměrován na stránku s účty.
-                    Pokud bude ověřovací kód nesprávný:
-                        - uživatelovi se zobrazí chybová hláška `wrong code`.
-            </li>
-            <li>Platba
-                <p>&nbsp;</p>
-                **Popis chování:**
-                Po potvrzení platby uživatelem proběhně několik kontrol:
-                <p>&nbsp;</p>
-                <ul>
-                    <li>Má-li uživatel účet v měně platby?
-                    </li>
-                    <li>Má-li uživatel dostatek peněz na účtu?
-                        <ul>
-                            <li>Pokud uživatel nemá účet v měně platby, bude provedena kontrola dostatku peněz na výchozí měně</li>
-                        </ul>
-                    </li>
-                </ul>
-                **Výchozá měna:** pro všechny uživatele je nastavena na `CZK`.
-                <p>&nbsp;</p>
-                <ul>
-                    <li>Na hlavní stránce s účty je umíštěno tlačítko `payment`,</li>
-                    <li>Po kliknutí na tlačítko `payment` se náhodně vygeneruje částka a měna,</li>
-                    <li>Uživatel musí potvrdit nebo zamítnout platbu,</li>
-                    <li>V případě úspěšné transakcí:
-                        <ul>
-                        <li>bude přesměrován na stránku s účty,</li>
-                        <li>bodou upravena data v databázi.</li>
-                        </ul>
-                    </li>
-                    <li>V případě neúspěšné transakce:
-                        <ul>
-                        <li>bude přesměrován na stránku s účty,</li>
-                        <li>uživatelovi se zobrazí chybová hláška `transaction was not successful`.</li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li>Historie měňového kurzu
-            <p>&nbsp;</p>
-                Na hlavní strínce bude zobrazována historie tranzakcí s aktuáně zvolenou měnou.
-            </li>
-            <li>Zobrazení
-            <p>&nbsp;</p>
-                <ul>
-                    <li>Na hlavní stránce s účty je umístěno tlačítko `change currency`,</li>
-                    <li>Po kliknutí na tlačítko `change currency` se změní aktuální měna na následující uživatelskou měnu,</li>
-                    <li>Uživatel může zobrazit jakoukoliv ze svých měn.</li>
-                </ul>
-            </li>
-        </ul>
-        2.2.1. Use Case diagram
-            <p align="center">
-                <img src="data for dsp/Uni_Bank.svg" alt="Use Case diagram" style="max-width:85%;">
-            </p>
+	- Přihlášení
+	    Uživatel musí zadat přihlašovací údaje. Pokud v systému bude nalezen uživatel s odpovídajícími údají: - bude přesměrován na stránku s ověřením, - odešle se mu email s ověřovácím kódem. Pokud v systému nebude nalezen uživatel s odpovídajícími údají: - uživatelovi se zobrazí chybová hláška `user was not found`.
+	    
+	- Ověření
+	    Uživatel musí zadat ověřovací kód. Pokud bude ověřovací kód správný: - bude přesměrován na stránku s účty. Pokud bude ověřovací kód nesprávný: - uživatelovi se zobrazí chybová hláška `wrong code`.
+	    
+	- Platba
+	    **Popis chování:** Po potvrzení platby uživatelem proběhně několik kontrol:
+	    -   Má-li uživatel účet v měně platby?
+	    -   Má-li uživatel dostatek peněz na účtu?
+	        -   Pokud uživatel nemá účet v měně platby, bude provedena kontrola dostatku peněz na výchozí měně
+	    	 **Výchozá měna:** pro všechny uživatele je nastavena na `CZK`.
+	    
+	    -   Na hlavní stránce s účty je umíštěno dva polí a zlačítko `pay`,
+		-   Do prvního pole se uživatel napíše částku,
+		-   V druhém poli si uživatel vybere měnu platby,
+		-   Po zadání všech údajů platby se umožní stisknutí tlačítka `pay`,
+		-   Po kliknutí na tlačítko `pay`:
+			-   V případě úspěšné transakcí:
+				-   bude přesměrován na stránku s účty,
+				-   bodou upravena data v databázi.
+			-   V případě neúspěšné transakce se uživatelovi zobrazí chybová hláška transaction was not successful.
+-   Historie měňového kurzu
+    Na hlavní strínce bude zobrazována historie tranzakcí s aktuáně zvolenou měnou.
+-   Zobrazení
+    -   Na hlavní stránce s účty je umístěno tlačítko `change currency`,
+    -   Po kliknutí na tlačítko `change currency` se změní aktuální měna na následující uživatelskou měnu,
+    -   Uživatel může zobrazit jakoukoliv ze svých měn.
+
+    2.2.1. Use Case diagram
+		![[data for dsp/Uni_Bank.svg|470]]
+	2.2.1. SQLite schéma
+		![[img_sql.png|400]]
     2.3. Charakteristiky uživatele
         <ul>
             <li>Uživatel bude mít přístup do aplikace pouze po přihlášení a ověření,</li>
@@ -131,7 +95,6 @@
             <li>Uživatel bude mít přístup pouze k svým transakcím,</li>
             <li>Uživatel bude mít přístup pouze k svým měnám.</li>
         </ul>
-        
 3. Systémové požadavky
     - Klient / Server
         - Každá část aplikace běží samostatně.
