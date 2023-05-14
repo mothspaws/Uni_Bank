@@ -17,21 +17,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
-      
-    - name: Install server dependencies
-      run: npm ci
-      
-    - name: Install client dependencies
-      run: cd client && npm ci
-      
-    - name: Run server tests
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Install dependencies
+      run: npm install
+    - name: Test
       run: npm test
-      
-    - name: Run client tests
-      run: cd client && npm test
 
     # Uncomment these lines if you want to build your Svelte app
     # - name: Build client app
