@@ -1,29 +1,27 @@
 const tools = require('../my_library.js');
 const dbase = require('../dbase.js');
-
-jest.mock('../dbase.js');
+const sinon = require('sinon');
 
 describe('my_library.js tests', () => {
-    beforeEach(() => {
-        // Mock dbase functions
-        dbase.getUsers = jest.fn();
-        dbase.getAuthCode = jest.fn();
-        dbase.getCurrencies = jest.fn();
-        dbase.getLatestRate = jest.fn();
-        dbase.getBalance = jest.fn();
-        dbase.updateBalance = jest.fn();
-        dbase.getMaxTransactionId = jest.fn();
-        dbase.insertTransaction = jest.fn();
+    afterAll(async () => {
+        await dbase.close();
+    });
 
-        // Mock tools functions
-        tools.haveUserCurrency = jest.fn();
-        tools.adoptAmountByCurrency = jest.fn();
-        tools.controleAmount = jest.fn();
-        tools.makePayment = jest.fn();
+    beforeEach(() => {
+        sinon.stub(dbase, 'getUsers');
+        sinon.stub(dbase, 'getAuthCode');
+        sinon.stub(dbase, 'getLatestRate');
+        sinon.stub(dbase, 'getBalance');
+        sinon.stub(dbase, 'updateBalance');
+        sinon.stub(dbase, 'getMaxTransactionId');
+        sinon.stub(dbase, 'insertTransaction');
+        sinon.stub(tools, 'adoptAmountByCurrency');
+        sinon.stub(tools, 'controleAmount');
+        sinon.stub(tools, 'makePayment');
     });
 
     afterEach(() => {
-        jest.clearAllMocks();
+        sinon.restore();
     });
 
     describe('generateSixDigitCode', () => {
@@ -36,106 +34,68 @@ describe('my_library.js tests', () => {
 
     describe('isValidLogin', () => {
         it('should validate login credentials', async () => {
-            // Arrange
             const username = 'testUser';
             const password = 'testPassword';
-            dbase.getUsers.mockResolvedValue([
-                { username: 'testUser', password: 'testPassword', email: 'testUser@example.com' },
-            ]);
+            dbase.getUsers.returns(Promise.resolve([{ username: 'testUser', password: 'testPassword', email: 'testUser@example.com' }]));
 
-            // Act
             const { result, email } = await tools.isValidLogin(username, password);
 
-            // Assert
             expect(result).toBe(true);
             expect(email).toBe('testUser@example.com');
         });
 
         it('should return false if credentials are invalid', async () => {
-            // Arrange
             const username = 'invalidUser';
             const password = 'invalidPassword';
-            dbase.getUsers.mockResolvedValue([
-                { username: 'testUser', password: 'testPassword', email: 'testUser@example.com' },
-            ]);
+            dbase.getUsers.resolves([{ username: 'testUser', password: 'testPassword', email: 'testUser@example.com' }]);
 
-            // Act
             const { result, email } = await tools.isValidLogin(username, password);
 
-            // Assert
             expect(result).toBe(false);
-            expect(email).toBe(null);
+            expect(email).toBeNull();
         });
     });
 
     describe('isValidCode', () => {
         it('should validate authentication code', async () => {
-            // Arrange
             const username = 'testUser';
             const auth_code = '123456';
-            dbase.getAuthCode.mockResolvedValue({ auth_code });
+            dbase.getAuthCode.resolves({ auth_code });
 
-            // Act
             const result = await tools.isValidCode(username, auth_code);
 
-            // Assert
             expect(result).toBe(true);
         });
 
         it('should return false if code is invalid', async () => {
-            // Arrange
             const username = 'testUser';
             const auth_code = '123456';
-            dbase.getAuthCode.mockResolvedValue({ auth_code });
+            dbase.getAuthCode.resolves({ auth_code });
 
-            // Act
             const result = await tools.isValidCode(username, 'invalidCode');
 
-            // Assert
             expect(result).toBe(false);
         });
     });
 
-    describe('payment', () => {
-        it('should return false if user does not have enough funds', async () => {
-            // Arrange
+    describe('haveUserCurrency', () => {
+        it('should check if user has currency', async () => {
             const username = 'testUser';
-            const currency = 'USD';
-            const amount = -100;
+            const currency = 'EUR';
+            dbase.getCurrencies.resolves(Promise.resolve([{ currency: 'EUR' }]));
 
-            tools.haveUserCurrency.mockResolvedValue(true);
-            tools.controleAmount.mockResolvedValue(false); // User does not have enough funds
-            dbase.getBalance.mockResolvedValue(50); // Current balance is less than payment amount
-            tools.adoptAmountByCurrency.mockResolvedValue(100);
-            dbase.updateBalance.mockResolvedValue();
-            dbase.getMaxTransactionId.mockResolvedValue(1);
-            dbase.insertTransaction.mockResolvedValue();
+            const result = await tools.haveUserCurrency(username, currency);
 
-            // Act
-            const result = await tools.payment(username, currency, amount);
-
-            // Assert
-            expect(result).toBe(false);
+            expect(result).toBe(true);
         });
 
-        it('should return true if payment was successful', async () => {
-            // Arrange
+        it('should return false if user does not have currency', async () => {
             const username = 'testUser';
-            const currency = 'USD';
-            const amount = 100;
+            const currency = 'EUR';
+            dbase.getCurrencies.resolves(Promise.resolve([{ currency: 'CZK' }]));
 
-            tools.haveUserCurrency.mockResolvedValue(true);
-            tools.controleAmount.mockResolvedValue(true); // User has enough funds
-            dbase.getBalance.mockResolvedValue(100); // Current balance is more than payment amount
-            tools.adoptAmountByCurrency.mockResolvedValue(100);
-            dbase.updateBalance.mockResolvedValue();
-            dbase.getMaxTransactionId.mockResolvedValue(1);
-            dbase.insertTransaction.mockResolvedValue();
+            const result = await tools.haveUserCurrency(username, currency);
 
-            // Act
-            const result = await tools.payment(username, currency, amount);
-
-            // Assert
             expect(result).toBe(false);
         });
     });

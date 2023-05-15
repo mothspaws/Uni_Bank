@@ -361,6 +361,20 @@ function getLatestRate(code) {
     });
 }
 
+// Close database
+function close() {
+    return new Promise((resolve, reject) => {
+        db.close((err) => {
+            if (err) {
+                console.error(err.message);
+                reject(err);
+            }
+            console.log('Close the database connection.');
+            resolve(true);
+        });
+    });
+}
+
 // export functions
 module.exports = {
     db,
@@ -380,4 +394,5 @@ module.exports = {
     insertRate,
     getRates,
     getLatestRate,
+    close,
 };
