@@ -1,7 +1,9 @@
 const tools = require('../my_library.js');
 const dbase = require('../dbase.js');
+const mailer = require('../mailer.js');
 
 jest.mock('../dbase.js');
+jest.mock('../mailer.js');
 
 describe('my_library.js tests', () => {
     // after all tests close the connection to the database
@@ -12,9 +14,9 @@ describe('my_library.js tests', () => {
         // Mock dbase functions
         dbase.getUsers = jest.fn();
         dbase.getAuthCode = jest.fn();
-        dbase.getCurrencies = jest.fn();
+        dbase.getCurrencies = jest.fn().mockResolvedValue(['CZK', 'USD', 'EUR']);
         dbase.getLatestRate = jest.fn();
-        dbase.getBalance = jest.fn();
+        dbase.getBalance = jest.fn().mockResolvedValue(1000);
         dbase.updateBalance = jest.fn();
         dbase.getMaxTransactionId = jest.fn();
         dbase.insertTransaction = jest.fn();
@@ -100,47 +102,96 @@ describe('my_library.js tests', () => {
         });
     });
 
-    // describe('payment', () => {
-    //     it('should return false if user does not have enough funds', async () => {
+    describe('sendEmail', () => {
+        it('should send email', async () => {
+            const email = 'viktoria.sr@icloud.com';
+            mailer.sendEmail.mockResolvedValue();
+            const result = await tools.sendEmail(email, '123456');
+            expect(mailer.sendEmail).toHaveBeenCalledWith(email, '123456');
+        });
+
+        it('should not send email', async () => {
+            // Arrange
+            const email = 'verybademail';
+            const error = new Error('Invalid email');
+            mailer.sendEmail.mockRejectedValue(error);
+
+            // Act
+            try {
+                const result = await tools.sendEmail(email, '123456');
+            } catch (err) {
+                // Assert
+                expect(mailer.sendEmail).toHaveBeenCalledWith(email, '123456');
+                expect(err).toEqual(error);
+            }
+        });
+    });
+
+    describe('payment', () => {
+        // Here you should create tests to cover all edge cases of payment function
+        it('should make payment', async () => {
+            // Arrange
+            const username = 'testUser';
+            const currency = 'CZK';
+            const amount = 100;
+            tools.haveUserCurrency.mockResolvedValue(true);
+            tools.adoptAmountByCurrency.mockResolvedValue({ currency, amount });
+            tools.controleAmount.mockResolvedValue(true);
+            tools.makePayment.mockResolvedValue(true);
+
+            // Act
+            const result = await tools.payment(username, currency, amount);
+
+            // Assert
+            expect(result).toBe(true);
+        });
+
+        it('should not make payment', async () => {
+            // Arrange
+            const username = 'testUser';
+            const currency = 'CZK';
+            const amount = -10000;
+            tools.haveUserCurrency.mockResolvedValue(true);
+            tools.adoptAmountByCurrency.mockResolvedValue({ currency, amount });
+            tools.controleAmount.mockResolvedValue(false);
+            tools.makePayment.mockResolvedValue(false);
+
+            // Act
+            const result = await tools.payment(username, currency, amount);
+
+            // Assert
+            expect(result).toBe(false);
+        });
+    });
+
+    // describe('haveUserCurrency', () => {
+    //     // clear moc for tools.haveUserCurrency
+    //     beforeEach(() => {
+    //         jest.clearAllMocks();
+    //     });
+    //     it('should have user currency', async () => {
     //         // Arrange
     //         const username = 'testUser';
-    //         const currency = 'USD';
-    //         const amount = -100;
-
-    //         tools.haveUserCurrency.mockResolvedValue(true);
-    //         tools.controleAmount.mockResolvedValue(false); // User does not have enough funds
-    //         dbase.getBalance.mockResolvedValue(50); // Current balance is less than payment amount
-    //         tools.adoptAmountByCurrency.mockResolvedValue(100);
-    //         dbase.updateBalance.mockResolvedValue();
-    //         dbase.getMaxTransactionId.mockResolvedValue(1);
-    //         dbase.insertTransaction.mockResolvedValue();
+    //         const currency = 'CZK';
+    //         dbase.getCurrencies.mockResolvedValue([{currency: 'CZK'}, {currency: 'USD'}]);
 
     //         // Act
-    //         const result = await tools.payment(username, currency, amount);
+    //         const result = await tools.haveUserCurrency(username, currency);
 
     //         // Assert
-    //         expect(result).toBe(false);
+    //         expect(result).toBe(true);
     //     });
+    // });
 
-    //     it('should return true if payment was successful', async () => {
-    //         // Arrange
-    //         const username = 'testUser';
-    //         const currency = 'USD';
-    //         const amount = 100;
+    // describe('adoptAmountByCurrency', () => {
+    //     // Here you should create tests to cover all edge cases of adoptAmountByCurrency function
+    // });
 
-    //         tools.haveUserCurrency.mockResolvedValue(true);
-    //         tools.controleAmount.mockResolvedValue(true); // User has enough funds
-    //         dbase.getBalance.mockResolvedValue(100); // Current balance is more than payment amount
-    //         tools.adoptAmountByCurrency.mockResolvedValue(100);
-    //         dbase.updateBalance.mockResolvedValue();
-    //         dbase.getMaxTransactionId.mockResolvedValue(1);
-    //         dbase.insertTransaction.mockResolvedValue();
+    // describe('controleAmount', () => {
+    //     // Here you should create tests to cover all edge cases of controleAmount function
+    // });
 
-    //         // Act
-    //         const result = await tools.payment(username, currency, amount);
-
-    //         // Assert
-    //         expect(result).toBe(false);
-    //     });
+    // describe('makePayment', () => {
+    //     // Here you should create tests to cover all edge cases of makePayment function
     // });
 });
