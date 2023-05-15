@@ -5,6 +5,9 @@ let valid_code = null;
 const name = 'brusinka';
 
 describe('API Endpoints', () => {
+    afterAll(() => {
+        dbase.close();
+    });
     it('should fail to login with invalid credentials', async () => {
         dbase.insertAuthCode(name, valid_code);
         const res = await request(app)

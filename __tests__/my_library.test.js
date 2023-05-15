@@ -4,6 +4,10 @@ const dbase = require('../dbase.js');
 jest.mock('../dbase.js');
 
 describe('my_library.js tests', () => {
+    // after all tests close the connection to the database
+    afterAll(() => {
+        dbase.close();
+    });
     beforeEach(() => {
         // Mock dbase functions
         dbase.getUsers = jest.fn();
