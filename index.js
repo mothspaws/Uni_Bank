@@ -29,6 +29,15 @@ dbase.createTables();
     // Insert transactions for tester_glob
     dbase.insertTransaction(4, "tester_glob", "CZK", new Date("2023-01-13 15:17:09").getTime(), -50);
     dbase.insertTransaction(5, "tester_glob", "EUR", new Date("2023-03-14 12:08:56").getTime(), 2.1);
+
+    dbase.insertUser("testUser", "testPassword", "testUser@example.com", 'CZK', 1000);
+    dbase.insertCurrency("testUser", "EUR", 26);
+    dbase.insertCurrency("testUser", "USD", 130);
+
+    // Insert transactions for testUser
+    dbase.insertTransaction(6, "testUser", "CZK", new Date("2023-01-13 15:17:09").getTime(), -50);
+    dbase.insertTransaction(7, "testUser", "EUR", new Date("2023-03-14 12:08:56").getTime(), 2.1);
+    dbase.insertTransaction(8, "testUser", "USD", new Date("2023-03-14 12:08:56").getTime(), 2.1);
   }
 })();
 
