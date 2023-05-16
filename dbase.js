@@ -361,9 +361,15 @@ function getLatestRate(code) {
     });
 }
 
+// Close connection with database
+function close() {
+    db.close();
+}
+
 // export functions
 module.exports = {
     db,
+    close,
     createTables,
     insertUser,
     insertCurrency,
