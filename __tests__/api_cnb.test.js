@@ -1,4 +1,4 @@
-const fetch = require('node-fetch');
+// const fetch = require('node-fetch');
 const dbase = require('../dbase.js');
 const api_cnb = require('../api_cnb.js');
 jest.mock('../dbase.js');

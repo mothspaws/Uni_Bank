@@ -17,6 +17,7 @@ dbase.createTables();
 (async () => {
   const users = await dbase.getUsers();
   if (users.length === 0) {
+    await api_cnb.fetchAndStoreRates();
     dbase.insertUser("brusinka", "password1234", "viktoria.sr@icloud.com", 'CZK', 1000.25);
     dbase.insertCurrency("brusinka", "EUR", 213);
     dbase.insertCurrency("brusinka", "KRW", 2732240.44);
@@ -31,15 +32,6 @@ dbase.createTables();
     // Insert transactions for tester_glob
     dbase.insertTransaction(4, "tester_glob", "CZK", new Date("2023-01-13 15:17:09").getTime(), -50);
     dbase.insertTransaction(5, "tester_glob", "EUR", new Date("2023-03-14 12:08:56").getTime(), 2.1);
-
-    dbase.insertUser("testUser", "testPassword", "testUser@example.com", 'CZK', 1000);
-    dbase.insertCurrency("testUser", "EUR", 26);
-    dbase.insertCurrency("testUser", "USD", 130);
-
-    // Insert transactions for testUser
-    dbase.insertTransaction(6, "testUser", "CZK", new Date("2023-01-13 15:17:09").getTime(), -50);
-    dbase.insertTransaction(7, "testUser", "EUR", new Date("2023-03-14 12:08:56").getTime(), 2.1);
-    dbase.insertTransaction(8, "testUser", "USD", new Date("2023-03-14 12:08:56").getTime(), 2.1);
   }
 })();
 
@@ -88,9 +80,18 @@ app.get('/api/user-data/:username', async (req, res) => {
 
 // POST endpoint for make payments
 app.post('/api/payment', async (req, res) => {
-  const { username, currency, amount } = req.body;
-  const result = await tools.payment(username, currency, amount);
-  res.json({ result });
+  try {
+    const { username, currency, amount } = req.body;
+    
+    if (!username || !currency || !amount) {
+      throw new Error('Missing required fields');
+    }
+
+    const result = await tools.payment(username, currency, amount);
+    res.json({ result });
+  } catch (error) {
+    res.status(400).json({ result: false });
+  }
 });
 
 // POST endpoint for getting all currencies
