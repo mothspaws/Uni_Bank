@@ -32,5 +32,13 @@ async function fetchAndStoreRates() {
   }
 }
 
-// Run the function every day at 14:35
-const task = cron.schedule('35 14 * * *', fetchAndStoreRates);
+// Run the function every day at 14:35, unless we're running tests
+let task;
+if (process.env.NODE_ENV !== 'test') {
+  task = cron.schedule('35 14 * * *', fetchAndStoreRates);
+}
+
+
+module.exports = {
+  fetchAndStoreRates
+};
