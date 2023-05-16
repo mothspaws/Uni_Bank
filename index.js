@@ -17,6 +17,7 @@ dbase.createTables();
 (async () => {
   const users = await dbase.getUsers();
   if (users.length === 0) {
+    await api_cnb.fetchAndStoreRates();
     dbase.insertUser("brusinka", "password1234", "viktoria.sr@icloud.com", 'CZK', 1000.25);
     dbase.insertCurrency("brusinka", "EUR", 213);
     dbase.insertCurrency("brusinka", "KRW", 2732240.44);

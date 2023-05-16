@@ -15,6 +15,7 @@ beforeAll(async () => {
 
 afterAll(async () => {
     await dbase.deleteUser(name);
+    jest.clearAllMocks();
 });
 
 // login
