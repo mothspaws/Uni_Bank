@@ -366,6 +366,56 @@ function close() {
     db.close();
 }
 
+// Delete user and his currencies, transactions
+function deleteUser(username) {
+    db.serialize(() => {
+        db.run(
+            `DELETE FROM User WHERE username = ?`,
+            [username],
+            function (err) {
+                if (err) {
+                    console.log(err);
+                }
+            }
+        );
+            
+        db.run(
+            `DELETE FROM Currencies WHERE username = ?`,
+            [username],
+            function (err) {
+                if (err) {
+                    console.log(err);
+                }
+            }
+        );
+
+        db.run(
+            `DELETE FROM Transactions WHERE username = ?`,
+            [username],
+            function (err) {
+                if (err) {
+                    console.log(err);
+                }
+            }
+        );
+    });
+}
+
+// delete transactions for user
+function deleteTransactions(username) {
+    db.serialize(() => {
+        db.run(
+            `DELETE FROM Transactions WHERE username = ?`,
+            [username],
+            function (err) {
+                if (err) {
+                    console.log(err);
+                }
+            }
+        );
+    });
+}
+
 // export functions
 module.exports = {
     db,
@@ -386,4 +436,6 @@ module.exports = {
     insertRate,
     getRates,
     getLatestRate,
+    deleteUser,
+    deleteTransactions,
 };

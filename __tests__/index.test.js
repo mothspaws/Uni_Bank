@@ -3,6 +3,20 @@ const app = require("../index.js");
 const dbase = require("../dbase.js");
 const name = "testUser";
 
+// beforeAll creates a user and some transactions
+beforeAll(async () => {
+    await dbase.insertUser(name, "testPassword", "testUser@example.com", 'CZK', 1000);
+    await dbase.insertCurrency(name, "EUR", 26);
+    await dbase.insertCurrency(name, "USD", 130);
+    await dbase.insertTransaction(6, name, "CZK", new Date("2023-01-13 15:17:09").getTime(), -50);
+    await dbase.insertTransaction(7, name, "EUR", new Date("2023-03-14 12:08:56").getTime(), 2.1);
+    await dbase.insertTransaction(8, name, "USD", new Date("2023-03-14 12:08:56").getTime(), 2.1);
+});
+
+afterAll(async () => {
+    await dbase.deleteUser(name);
+});
+
 // login
 describe("POST /api/login", () => {
     it("should login with valid credentials", async () => {
