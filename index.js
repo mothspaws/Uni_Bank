@@ -88,9 +88,18 @@ app.get('/api/user-data/:username', async (req, res) => {
 
 // POST endpoint for make payments
 app.post('/api/payment', async (req, res) => {
-  const { username, currency, amount } = req.body;
-  const result = await tools.payment(username, currency, amount);
-  res.json({ result });
+  try {
+    const { username, currency, amount } = req.body;
+    
+    if (!username || !currency || !amount) {
+      throw new Error('Missing required fields');
+    }
+
+    const result = await tools.payment(username, currency, amount);
+    res.json({ result });
+  } catch (error) {
+    res.status(400).json({ result: false });
+  }
 });
 
 // POST endpoint for getting all currencies
