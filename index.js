@@ -4,6 +4,8 @@ const express = require('express');
 const cors = require('cors');
 
 const app = express();
+// api_cnb
+const api_cnb = require('./api_cnb.js');
 
 // tools
 const tools = require('./my_library.js');
@@ -40,9 +42,6 @@ dbase.createTables();
     dbase.insertTransaction(8, "testUser", "USD", new Date("2023-03-14 12:08:56").getTime(), 2.1);
   }
 })();
-
-// api_cnb
-const api_cnb = require('./api_cnb.js');
 
 // Middleware
 app.use(express.json()); // Parse JSON request bodies
