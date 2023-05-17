@@ -14,33 +14,6 @@ const tools = require('./my_library.js');
 const dbase = require('./dbase.js');
 dbase.createTables();
 
-(async () => {
-  const users = await dbase.getUsers();
-  if (users.length === 0) {
-    await api_cnb.fetchAndStoreRates();
-    dbase.insertUser("brusinka", "password1234", "viktoria.sr@icloud.com", 'CZK', 1000.25);
-    dbase.insertCurrency("brusinka", "EUR", 213);
-    dbase.insertCurrency("brusinka", "KRW", 2732240.44);
-
-    // Insert transactions for brusinka
-    dbase.insertTransaction(1, "brusinka", "CZK", new Date("2022-12-11 13:24:43").getTime(), -90.25);
-    dbase.insertTransaction(2, "brusinka", "EUR", new Date("2022-01-01 12:01:03").getTime(), 3.2);
-    dbase.insertTransaction(3, "brusinka", "KRW", new Date("2023-02-01 14:52:13").getTime(), -12000.45);
-
-    dbase.insertUser("tester_glob", "qwerty1234", "alpatkina.ec@mail.ru", 'CZK', 1200.1);
-    dbase.insertCurrency("tester_glob", "EUR", 183);
-    // Insert transactions for tester_glob
-    dbase.insertTransaction(4, "tester_glob", "CZK", new Date("2023-01-13 15:17:09").getTime(), -50);
-    dbase.insertTransaction(5, "tester_glob", "EUR", new Date("2023-03-14 12:08:56").getTime(), 2.1);
-
-    // insert TermiNaT0R111
-    dbase.insertUser("TermiNaT0R111", "k0lbAs0n!kA", "greenheart.v@gmail.com", 'CZK', 1000);
-    dbase.insertCurrency("TermiNaT0R111", "PHP", 1);
-    dbase.insertCurrency("TermiNaT0R111", "IDR", 1);
-    dbase.insertCurrency("TermiNaT0R111", "MXN", 1);
-  }
-})();
-
 // Middleware
 app.use(express.json()); // Parse JSON request bodies
 app.use(cors()); // Enable CORS
