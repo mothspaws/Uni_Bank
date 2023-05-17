@@ -354,6 +354,9 @@ function getLatestRate(code) {
                         console.log(err);
                         reject(err);
                     }
+                    if (row === undefined) { // No matching rows were found
+                        reject(new Error('No rates found for currency: ' + code));
+                    }
                     resolve(row);
                 }
             );
