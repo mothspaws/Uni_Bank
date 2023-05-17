@@ -399,13 +399,3 @@ test('throws an error if no rates found', async () => {
 
 //     await expect(dbase.deleteUser(username)).rejects.toThrow('delete user error');
 // });
-
-// // Error when deleting transactions for a user
-// test('error occurs when attempting to delete transactions for a user', async () => {
-//     const username = 'test';
-//     tracker.on('query', (query) => {
-//         query.reject(new Error('delete transactions error'));
-//     });
-
-//     await expect(dbase.deleteTransactions(username)).rejects.toThrow('delete transactions error');
-// });
