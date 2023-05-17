@@ -169,7 +169,6 @@ describe("GET /api/currencies", () => {
     it("should get all currencies", async () => {
         const response = await supertest(app).get("/api/currencies");
         expect(response.status).toEqual(200);
-        // const equal to AUD,BRL,BGN,CNY,DKK,EUR,PHP,HKD,INR,IDR,ISK,ILS,JPY,ZAR,CAD,KRW,HUF,MYR,MXN,XDR,NOK,NZD,PLN,RON,SGD,SEK,CHF,THB,TRY,USD,GBP
         expect(response.body.currencies).toEqual(expect.anything());
     });
 });
