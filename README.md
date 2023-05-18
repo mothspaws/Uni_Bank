@@ -112,3 +112,6 @@
         - Pokud nebude možné z API data získat, použijou se poslední dostupná data, tj. data naposledy uložená v databázi
     - Měny
         - Data se se stahují jednou za den, automaticky na serveru ve 14:35
+
+4. Odhad čásové náročnosti 
+	Odpověď ze serveru by měla trvat 8-10 ms.
