@@ -199,6 +199,10 @@ describe('my_library.js tests', () => {
     });
 
     describe('adopt amount by currency', () => {
+        // clear moc for tools.adoptAmountByCurrency
+        afterEach(() => {
+            jest.clearAllMocks();
+        });
         it('should adopt amount by currency', async () => {
             // Arrange  
             const currency = 'CZK';
@@ -241,7 +245,7 @@ describe('my_library.js tests', () => {
         //     const spent_amount = -1090;
         //     const isOverdraftAllowed = true;
         //     const expected_new_balance = -99;
-        //     tools.adoptAmountByCurrency.mockResolvedValue(payment_currency, spent_amount);
+        //     tools.adoptAmountByCurrency.mockResolvedValue(spent_amount);
         //     // Act
         //     const result = await tools.makePayment(username, using_currency, payment_currency, spent_amount, isOverdraftAllowed);
 
