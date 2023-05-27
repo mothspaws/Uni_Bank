@@ -106,6 +106,30 @@ describe('my_library.js tests', () => {
         });
     });
 
+    describe('adopt amount by currency', () => {
+        // clear moc for tools.adoptAmountByCurrency
+        afterEach(() => {
+            jest.clearAllMocks();
+        });
+        it('should adopt amount by currency', async () => {
+            // Arrange  
+            const currency = 'CZK';
+            const amount = 100;
+            const rate = 1; // This should be the actual rate for the currency
+            const quantity = 1; // This should be the actual quantity for the currency
+            const expected = (amount * rate) / quantity;
+    
+            // Assume the mock for dbase.getLatestRate
+            dbase.getLatestRate.mockResolvedValue({ rate, quantity });
+    
+            // Act
+            const result = await tools.adoptAmountByCurrency(currency, amount);
+    
+            // Assert
+            expect(result).toEqual(expected);
+        });
+    });  
+    
     describe('payment', () => {
         beforeEach(() => {
             // Mock dbase functions
@@ -196,34 +220,7 @@ describe('my_library.js tests', () => {
             // Assert
             expect(result).toBe(false);
         });
-    });
-
-    describe('adopt amount by currency', () => {
-        // clear moc for tools.adoptAmountByCurrency
-        afterEach(() => {
-            jest.clearAllMocks();
-        });
-        it('should adopt amount by currency', async () => {
-            // Arrange  
-            const currency = 'CZK';
-            const amount = 100;
-            const rate = 1; // This should be the actual rate for the currency
-            const quantity = 1; // This should be the actual quantity for the currency
-            const expected = (amount * rate) / quantity;
-    
-            // Assume the mock for dbase.getLatestRate
-            dbase.getLatestRate.mockResolvedValue({ rate, quantity });
-    
-            // Assume the mock for tools.adoptAmountByCurrency
-            tools.adoptAmountByCurrency = jest.fn().mockResolvedValue(expected);
-    
-            // Act
-            const result = await tools.adoptAmountByCurrency(currency, amount);
-    
-            // Assert
-            expect(result).toEqual(expected);
-        });
-    });    
+    });  
 
     describe('makePayment with overdraft', () => {
         beforeEach(() => {
