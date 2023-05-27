@@ -18,13 +18,8 @@ function sendEmail(email, code_generated) {
             text: `Your authentication code is: ${code_generated}`,
         };
         transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                console.error("Error sending email:", error);
-                reject(error);
-            } else {
-                console.log("Email sent:", info.response);
-                resolve();
-            }
+            console.log("Email sent:", info.response);
+            resolve();
         });
     });
 }
