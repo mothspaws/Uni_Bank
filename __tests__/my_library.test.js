@@ -197,4 +197,76 @@ describe('my_library.js tests', () => {
             expect(result).toBe(false);
         });
     });
+
+    // describe('adopt amount by currency', () => {
+    //     // clear moc for tools.adoptAmountByCurrency
+    //     beforeEach(() => {
+    //         jest.clearAllMocks();
+    //     });
+
+    //     it('should adopt amount by currency', async () => {
+    //         // Arrange  
+    //         const currency = 'USD';
+    //         const amount = 100;
+    //         const expected = (amount * 5) / 1
+            
+    //         // Mock dbase functions
+    //         dbase.getLatestRate = jest.fn().mockResolvedValue({ rate: 5, quantity: 1 });
+
+    //         // Act
+    //         const result = await tools.adoptAmountByCurrency(currency, amount);
+
+    //         // Assert
+    //         expect(result).toEqual(expected);
+    //     });
+    // });
+
+    describe('makePayment with overdraft', () => {
+        beforeEach(() => {
+            // clear mocks
+            jest.clearAllMocks();
+            // Mock dbase functions
+            // set balance to 1000
+            dbase.getBalance = jest.fn().mockResolvedValue(1000);
+            dbase.updateBalance = jest.fn();
+            dbase.getMaxTransactionId = jest.fn().mockResolvedValue(1);
+            dbase.insertTransaction = jest.fn();
+        });
+
+        // it('should make payment with overdraft', async () => {
+        //     // Arrange
+        //     const username = 'testUser';
+        //     const using_currency = 'CZK';
+        //     const payment_currency = 'CZK';
+        //     const spent_amount = -1090;
+        //     const isOverdraftAllowed = true;
+        //     const expected_new_balance = -99;
+        //     tools.adoptAmountByCurrency.mockResolvedValue(payment_currency, spent_amount);
+        //     // Act
+        //     const result = await tools.makePayment(username, using_currency, payment_currency, spent_amount, isOverdraftAllowed);
+            
+        //     // Assert
+        //     expect(result).toBe(true);
+        //     expect(dbase.updateBalance).toHaveBeenCalledWith(username, using_currency, expected_new_balance);
+        //     expect(dbase.insertTransaction).toHaveBeenCalledWith(2, username, using_currency, expect.any(Number), spent_amount);
+        // });
+
+        it('should not make payment without overdraft', async () => {
+            // Arrange
+            const username = 'testUser';
+            const using_currency = 'CZK';
+            const payment_currency = 'CZK';
+            const spent_amount = -2000;
+            const isOverdraftAllowed = false;
+            tools.adoptAmountByCurrency.mockResolvedValue(spent_amount);
+
+            // Act
+            const result = await tools.makePayment(username, using_currency, payment_currency, spent_amount, isOverdraftAllowed);
+
+            // Assert
+            expect(result).toBe(false);
+            expect(dbase.updateBalance).not.toHaveBeenCalled();
+            expect(dbase.insertTransaction).not.toHaveBeenCalled();
+        });
+    });
 });
