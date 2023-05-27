@@ -39,13 +39,11 @@ async function payment(username, currency, amount) {
         if (!userHasCurrency) {
             transaction_cur = "CZK";
         }
-        let canMakePayment = await controleAmount(username, transaction_cur, currency, amount);
+        const canMakePayment = await controleAmount(username, transaction_cur, currency, amount);
         if (!canMakePayment) {
             if (transaction_cur === currency) {
-                return false;
-            } else {
                 transaction_cur = "CZK";
-                canMakePayment = await controleAmount(username, transaction_cur, currency, amount);
+                const canMakePayment = await controleAmount(username, transaction_cur, currency, amount);
                 if (!canMakePayment) {
                     return false;
                 }

@@ -234,25 +234,6 @@ describe('my_library.js tests', () => {
             dbase.insertTransaction = jest.fn();
         });
 
-        // it('should make payment with overdraft', async () => {
-        //     // Arrange
-        //     const username = 'testUser';
-        //     const using_currency = 'CZK';
-        //     const payment_currency = 'CZK';
-        //     const spent_amount = -1090;
-        //     const isOverdraftAllowed = true;
-        //     const expected_new_balance = -99;
-        //     tools.controleAmount.mockResolvedValue(true);
-
-        //     // Act
-        //     const result = await tools.makePayment(username, using_currency, payment_currency, spent_amount, isOverdraftAllowed);
-
-        //     // Assert
-        //     expect(result).toBe(true);
-        //     expect(dbase.updateBalance).toHaveBeenCalledWith(username, using_currency, expected_new_balance);
-        //     expect(dbase.insertTransaction).toHaveBeenCalledWith(2, username, using_currency, expect.any(Number), spent_amount);
-        // });
-
         it('should not make payment without overdraft', async () => {
             // Arrange
             const username = 'testUser';
