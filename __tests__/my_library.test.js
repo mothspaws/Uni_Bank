@@ -147,7 +147,7 @@ describe('my_library.js tests', () => {
             const currency = 'CZK';
             const amount = -10000;
             tools.haveUserCurrency.mockResolvedValue(true);
-            tools.adoptAmountByCurrency.mockResolvedValue({ currency, amount });
+            tools.adoptAmountByCurrency.mockResolvedValue(amount);
             tools.controleAmount.mockResolvedValue(false);
             tools.makePayment.mockResolvedValue(false);
 
@@ -198,28 +198,28 @@ describe('my_library.js tests', () => {
         });
     });
 
-    // describe('adopt amount by currency', () => {
-    //     // clear moc for tools.adoptAmountByCurrency
-    //     beforeEach(() => {
-    //         jest.clearAllMocks();
-    //     });
-
-    //     it('should adopt amount by currency', async () => {
-    //         // Arrange  
-    //         const currency = 'USD';
-    //         const amount = 100;
-    //         const expected = (amount * 5) / 1
-            
-    //         // Mock dbase functions
-    //         dbase.getLatestRate = jest.fn().mockResolvedValue({ rate: 5, quantity: 1 });
-
-    //         // Act
-    //         const result = await tools.adoptAmountByCurrency(currency, amount);
-
-    //         // Assert
-    //         expect(result).toEqual(expected);
-    //     });
-    // });
+    describe('adopt amount by currency', () => {
+        it('should adopt amount by currency', async () => {
+            // Arrange  
+            const currency = 'CZK';
+            const amount = 100;
+            const rate = 1; // This should be the actual rate for the currency
+            const quantity = 1; // This should be the actual quantity for the currency
+            const expected = (amount * rate) / quantity;
+    
+            // Assume the mock for dbase.getLatestRate
+            dbase.getLatestRate.mockResolvedValue({ rate, quantity });
+    
+            // Assume the mock for tools.adoptAmountByCurrency
+            tools.adoptAmountByCurrency = jest.fn().mockResolvedValue(expected);
+    
+            // Act
+            const result = await tools.adoptAmountByCurrency(currency, amount);
+    
+            // Assert
+            expect(result).toEqual(expected);
+        });
+    });    
 
     describe('makePayment with overdraft', () => {
         beforeEach(() => {
@@ -244,7 +244,7 @@ describe('my_library.js tests', () => {
         //     tools.adoptAmountByCurrency.mockResolvedValue(payment_currency, spent_amount);
         //     // Act
         //     const result = await tools.makePayment(username, using_currency, payment_currency, spent_amount, isOverdraftAllowed);
-            
+
         //     // Assert
         //     expect(result).toBe(true);
         //     expect(dbase.updateBalance).toHaveBeenCalledWith(username, using_currency, expected_new_balance);

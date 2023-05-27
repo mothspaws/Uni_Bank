@@ -101,10 +101,8 @@ async function makePayment(username_for, using_currency, payment_currency, spent
         let newBalance = Math.round((currentBalance + updated_amount) * 100) / 100;
 
         if (newBalance < 0 && isOverdraftAllowed) {
-            // get 0-newBalance abs value
-            const amountToBeFeed = Math.abs(newBalance);
             // count fee for amountToBeFeed 10%
-            const fee = amountToBeFeed * 0.1;
+            const fee = Math.abs(newBalance) * 0.1;
             // count newBalance
             newBalance = newBalance - fee;
             // update amount
@@ -124,12 +122,6 @@ async function makePayment(username_for, using_currency, payment_currency, spent
         return true;
     } catch (error) {
         console.error("Error making payment:", error);
-        console.error("Error making payment:", error);
-        console.log('username_for: ', username_for);
-        console.log('using_currency: ', using_currency);
-        console.log('payment_currency: ', payment_currency);
-        console.log('spent_amount: ', spent_amount);
-        console.log('isOverdraftAllowed: ', isOverdraftAllowed);
         return false;
     }
 }
