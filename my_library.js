@@ -39,20 +39,19 @@ async function payment(username, currency, amount) {
         if (!userHasCurrency) {
             transaction_cur = "CZK";
         }
-        const canMakePayment = await controleAmount(username, transaction_cur, currency, amount);
+        let canMakePayment = await controleAmount(username, transaction_cur, currency, amount, false);
         if (!canMakePayment) {
             if (transaction_cur === currency) {
                 return false;
             } else {
                 transaction_cur = "CZK";
-                const canMakePayment = await controleAmount(username, transaction_cur, currency, amount);
+                canMakePayment = await controleAmount(username, transaction_cur, currency, amount, true);
                 if (!canMakePayment) {
                     return false;
                 }
             }
         }
-        // transaction_cur = "CZK";
-        return makePayment(username, transaction_cur, currency, amount);
+        return makePayment(username, transaction_cur, currency, amount, canMakePayment);
     } catch (error) {
         console.error("Error making payment:", error);
         return false;
@@ -76,24 +75,39 @@ async function adoptAmountByCurrency(currency_a, amount_a) {
 }
 
 // controle amount
-async function controleAmount(username_c, transaction_cur_c, currency_c, amount_c) {
+async function controleAmount(username_c, transaction_cur_c, currency_c, amount_c, allowOverdraft) {
     const balance = await dbase.getBalance(username_c, transaction_cur_c);
     let updated_amount = amount_c;
     if (transaction_cur_c !== currency_c) {
-        updated_amount = await adoptAmountByCurrency(currency_c, amount_c)
+        updated_amount = await adoptAmountByCurrency(currency_c, amount_c);
     }
-    return balance + updated_amount > 0;
+    if (balance + updated_amount >= 0) {
+        return true;
+    } else if (allowOverdraft && balance + updated_amount >= -0.1 * balance) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 // make payment
-async function makePayment(username_for, using_currency, payment_currency, spent_amount) {
+async function makePayment(username_for, using_currency, payment_currency, spent_amount, isOverdraftAllowed) {
     try {
         const currentBalance = await dbase.getBalance(username_for, using_currency);
         let updated_amount = spent_amount;
         if (using_currency !== payment_currency) {
             updated_amount = await adoptAmountByCurrency(payment_currency, spent_amount);
         }
-        const newBalance = Math.round((currentBalance + updated_amount) * 100) / 100;
+        let newBalance = Math.round((currentBalance + updated_amount) * 100) / 100;
+
+        if (newBalance < 0 && isOverdraftAllowed) {
+            // count fee for amountToBeFeed 10%
+            const fee = Math.abs(newBalance) * 0.1;
+            // count newBalance
+            newBalance = newBalance - fee;
+            // update amount
+            updated_amount = updated_amount - fee;
+        }
 
         await dbase.updateBalance(username_for, using_currency, newBalance);
         let id = 1;
@@ -102,7 +116,7 @@ async function makePayment(username_for, using_currency, payment_currency, spent
         } catch (error) {
             id = 1;
         }
-        const datetime = new Date()//.toLocaleString("cs-CZ", { timeZone: "Europe/Prague" });
+        const datetime = new Date();
 
         dbase.insertTransaction(id, username_for, using_currency, datetime.getTime(), Math.round(updated_amount * 100) / 100);
         return true;
