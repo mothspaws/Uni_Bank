@@ -96,7 +96,7 @@ async function makePayment(username_for, using_currency, payment_currency, spent
         }
         let newBalance = Math.round((currentBalance + updated_amount) * 100) / 100;
 
-        if (newBalance < 0) {
+        if (newBalance < 0 && currentBalance >= 0) {
             // count fee for amountToBeFeed 10%
             const fee = Math.abs(newBalance) * 0.1;
             // count newBalance
